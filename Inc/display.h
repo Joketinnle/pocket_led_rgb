@@ -42,7 +42,7 @@ enum CW_SELECT {
 };
 
 enum SCENES_SELECT {
-    NONE,
+    NONE = 0,
     POLICE,
     AMBULIENCE,
     LIGHTNING,

@@ -442,15 +442,15 @@ void disp_update(struct page_info *page)
         break;
 
     case PAGE_SCENES:
-        disp_clear();
-        disp_mode(SCENES_MODE);
-        disp_bettery(page->BAT);
-        disp_scenes_select(page->SECN);
-
-        // disp_8x16_nagative_printf("NONE    ");
-
-
-
+        if (page_prev.PAGE != page->PAGE) { 
+            disp_clear();
+            disp_mode(SCENES_MODE);
+            disp_bettery(page->BAT);
+            disp_scenes_select(page->SECN);
+        }
+        if (page_prev.SECN != page->SECN) {
+            disp_scenes_select(page->SECN);
+        }
         break;
 
     case PAGE_OFF:

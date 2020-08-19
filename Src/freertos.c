@@ -228,9 +228,9 @@ void dispaly_task(void const * argument)
   {
    msg = osMessageGet(keyQueueHandle, 1);
    if (msg.status == osEventMessage) {
-     key_p_m_long_sta = key_process(&pg_info, msg.value.v);
-     disp_update(&pg_info);
-   }
+      key_p_m_long_sta = key_process(&pg_info, msg.value.v);
+      disp_update(&pg_info);
+    }
 
    if ((delay_tmp++)%long_press_delay == 0 && key_p_m_long_sta != 0) {
      if (key_p_m_long_sta == KEY_PLUS_LONG_PRESS) {
@@ -241,8 +241,6 @@ void dispaly_task(void const * argument)
      disp_update(&pg_info);
 
    }
-
-
     osDelay(1);
   }
   /* USER CODE END dispaly_task */
