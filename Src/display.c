@@ -472,9 +472,8 @@ void disp_update(struct page_info *page)
     page_prev.color_temp = page->color_temp;
     page_prev.brightness = page->brightness;
     page_prev.select_num = page->select_num;
-    page_prev.BAT = page->BAT;
-    
-        
+    page_prev.SECN = page->SECN;
+    page_prev.BAT = page->BAT;    
 }
 
 
