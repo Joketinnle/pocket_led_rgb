@@ -140,7 +140,7 @@ uint8_t  key_process(struct page_info *page, uint32_t key_sta)
 
         case KEY_MENU:
             if (key_act == KEY_SHORT_PRESS) {
-                if (page->select_num <= SCENES_PG)
+                if (page->select_num < SCENES_PG)
                     page->select_num++;
             }
             break;
@@ -204,7 +204,7 @@ uint8_t  key_process(struct page_info *page, uint32_t key_sta)
                         page->brightness = 0;
                     break;
                 case SCENES_PG:
-                    if((page->SECN--) == NONE)
+                    if(--(page->SECN) == SCN_FIRST)
                         page->SECN = COLORCHASE;
                     break;
                 }

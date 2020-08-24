@@ -24,7 +24,7 @@ enum VALUE_SELECT {
     RGB_VAL = 2,
     CW_TEMP = 3,
     CW_BRIGHT = 4,
-    SCENES_PG = 5
+    SCENES_PG = 5 /* SECNES PAGE */
 };
 
 
@@ -42,7 +42,8 @@ enum CW_SELECT {
 };
 
 enum SCENES_SELECT {
-    NONE = 0,
+    SCN_FIRST = 0,
+    NONE ,
     POLICE,
     AMBULIENCE,
     LIGHTNING,

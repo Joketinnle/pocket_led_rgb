@@ -314,11 +314,11 @@ void disp_scenes_select(enum SCENES_SELECT SECN)
 {
     if (SECN <= AMBULIENCE) {
         disp_set_pos(2, 0);
-        disp_8x16_printf("NONE      ");
+        disp_8x16_printf("NONE       ");
         disp_set_pos(4, 0);
-        disp_8x16_printf("POLICE    ");
+        disp_8x16_printf("POLICE     ");
         disp_set_pos(6, 0);
-        disp_8x16_printf("AMBULIENCE");
+        disp_8x16_printf("AMBULIENCE ");
     } else if (SECN >AMBULIENCE && SECN <= COLORCHASE) {
         disp_set_pos(2, 0);
         disp_8x16_printf("LIGHTNING  ");
@@ -331,17 +331,17 @@ void disp_scenes_select(enum SCENES_SELECT SECN)
     switch (SECN) {
     case NONE:
         disp_set_pos(2, 0);
-        disp_8x16_nagative_printf("NONE      ");
+        disp_8x16_nagative_printf("NONE       ");
         break;
 
     case POLICE:
         disp_set_pos(4, 0);
-        disp_8x16_nagative_printf("POLICE    ");
+        disp_8x16_nagative_printf("POLICE     ");
         break;
 
     case AMBULIENCE:
         disp_set_pos(6, 0);
-        disp_8x16_nagative_printf("AMBULIENCE");
+        disp_8x16_nagative_printf("AMBULIENCE ");
         break;
     
     case LIGHTNING:
@@ -462,7 +462,6 @@ void disp_update(struct page_info *page)
             disp_clear();
             disp_bettery_big(page->BAT);
         }
-
         break;
     }
 
