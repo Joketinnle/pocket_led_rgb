@@ -104,7 +104,7 @@ void key_poll(void)
 
 
 
-uint8_t  key_process(struct page_info *page, uint32_t key_sta)
+uint8_t key_process(struct page_info *page, uint32_t key_sta)
 {
     enum KEY_TYPE type;
     uint8_t key_act;
@@ -114,9 +114,14 @@ uint8_t  key_process(struct page_info *page, uint32_t key_sta)
         type = i;
         key_act = (key_sta>>(i*4)) & 0x0000000F;
 
+        if (page->PAGE==PAGE_OFF && type!=KEY_POWER)
+            continue;
+
         switch (type) {
         case KEY_POWER:
-            if (key_act == KEY_SHORT_PRESS) {
+            if (key_act == KEY_SHORT_RELEASE) {
+                if (page->PAGE == PAGE_OFF)
+                    break;
                 if (page->select_num >= 1)
                     page->select_num--;
             } else if (key_act == KEY_LONG_PRESS) {
@@ -139,7 +144,7 @@ uint8_t  key_process(struct page_info *page, uint32_t key_sta)
             break;
 
         case KEY_MENU:
-            if (key_act == KEY_SHORT_PRESS) {
+            if (key_act == KEY_SHORT_RELEASE) {
                 if (page->select_num < SCENES_PG)
                     page->select_num++;
             }
@@ -215,8 +220,9 @@ uint8_t  key_process(struct page_info *page, uint32_t key_sta)
             }
             break;
         }
-
-
+				
+				if (page->PAGE == PAGE_OFF)
+						continue;
         if (page->select_num < CW_TEMP)
             page->PAGE = PAGE_RGB;
         else if (page->select_num == CW_TEMP || page->select_num == CW_BRIGHT)\

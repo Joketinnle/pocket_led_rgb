@@ -498,7 +498,7 @@ void disp_update(struct page_info *page)
 */
 void disp_led_value_init(struct page_info *page_init)
 {
-    page_init->PAGE = PAGE_RGB;//PAGE_OFF;//PAGE_SCENES;//PAGE_CW;//PAGE_RGB;
+    page_init->PAGE = PAGE_OFF;//PAGE_OFF;//PAGE_SCENES;//PAGE_CW;//PAGE_RGB;
     page_init->select_num = RGB_HUE;
     page_init->hue = 0;
     page_init->sat = 0;
