@@ -149,7 +149,7 @@ void MX_FREERTOS_Init(void) {
 
   /* definition and creation of keyQueue */
 /* what about the sizeof here??? cd native code */
-  osMessageQDef(keyQueue, 16, uint8_t);
+  osMessageQDef(keyQueue, 16, uint32_t);
   keyQueueHandle = osMessageCreate(osMessageQ(keyQueue), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -195,7 +195,7 @@ void ir_task(void const * argument)
   for(;;)
   {
     battery_read_test();
-    osDelay(1000);
+    osDelay(1000); /* only for tset */
   }
   /* USER CODE END ir_task */
 }
@@ -218,11 +218,11 @@ void dispaly_task(void const * argument)
   const uint8_t long_press_delay = 2; /* ms */
   static struct page_info pg_info;
   osTimerStart(keyTimerHandle, KEY_DELAY_MS);
-  //led_init();
+
   ssd1306_init();
-  //disp_test(); /* only for debug */
   disp_led_value_init(&pg_info);
   disp_update(&pg_info);
+
   /* Infinite loop */
   for(;;)
   {
@@ -232,6 +232,7 @@ void dispaly_task(void const * argument)
       disp_update(&pg_info);
     }
 
+    /* deal with key long press(plus and minus button) */
    if ((delay_tmp++)%long_press_delay == 0 && key_p_m_long_sta != 0) {
      if (key_p_m_long_sta == KEY_PLUS_LONG_PRESS) {
          key_process(&pg_info, KEY_SHORT_PRESS<<(KEY_PLUS*4));
