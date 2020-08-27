@@ -18,6 +18,7 @@
 #include "ssd_1306.h"
 #include "display.h"
 #include "hsv2rgb.h"
+#include "battery.h"
 #include "key.h"
 #include "led.h"
 

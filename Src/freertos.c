@@ -76,14 +76,13 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-
+osMessageQId batteryQueueHandle;
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 osThreadId irTaskHandle;
 osThreadId dispTaskHandle;
 osMessageQId irQueueHandle;
 osMessageQId keyQueueHandle;
-osMessageQId batteryQueueHandle;
 osTimerId keyTimerHandle;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -135,7 +134,7 @@ void MX_FREERTOS_Init(void) {
   irTaskHandle = osThreadCreate(osThread(irTask), NULL);
 
   /* definition and creation of dispTask */
-  osThreadDef(dispTask, dispaly_task, osPriorityIdle, 0, 256+128);
+  osThreadDef(dispTask, dispaly_task, osPriorityIdle, 0, 256);
   dispTaskHandle = osThreadCreate(osThread(dispTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -150,7 +149,7 @@ void MX_FREERTOS_Init(void) {
 
   /* definition and creation of keyQueue */
 /* what about the sizeof here??? cd native code */
-  osMessageQDef(keyQueue, 16, uint32_t);
+  osMessageQDef(keyQueue, 16, uint8_t);
   keyQueueHandle = osMessageCreate(osMessageQ(keyQueue), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -195,7 +194,8 @@ void ir_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    battery_read_test();
+    osDelay(1000);
   }
   /* USER CODE END ir_task */
 }
