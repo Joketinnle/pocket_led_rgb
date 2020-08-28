@@ -454,16 +454,18 @@ void disp_update(struct page_info *page)
         break;
 
     case PAGE_OFF:
-    /* @todo if it is not charging */
-        if (page->charging == false) {
-            disp_clear();
+        if (page_prev.PAGE != page->PAGE) {
             led_output_stop();
-        } else {
             disp_clear();
-            disp_bettery_big(page->BAT);
+            if (page->charging == true) {
+                disp_clear();
+                disp_bettery_big(page->BAT);
+            }
         }
+        if (page_prev.BAT != page->BAT)
         break;
-    }
+    
+    } /* End of switch(xxx) */
 
     page_prev.PAGE = page->PAGE;
     page_prev.hue = page->hue;
