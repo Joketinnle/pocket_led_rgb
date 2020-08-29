@@ -128,6 +128,19 @@ static void disp_bettery(enum BATTERY_STATUS pct)
     }
 }
 
+static void disp_bettery_charging(enum BATTERY_STATUS pct)
+{
+    uint8_t tmp_row = 0;
+    uint8_t tmp_col = 0;
+    
+    disp_set_pos(0, 96);
+    for (; tmp_col<2; tmp_col++) {
+        for (tmp_row=0 ;tmp_row<32; tmp_row++)
+            ssd1306_write_byte(battery_chrg[pct][tmp_col*32+tmp_row]);
+        disp_set_pos(s_column+1, s_row);
+    }
+}
+
 static void disp_bettery_big(enum BATTERY_STATUS pct)
 {
     uint8_t tmp_row = 0;
@@ -388,7 +401,7 @@ void disp_update(struct page_info *page)
             disp_6x8_printf("  Sat");
             disp_set_pos(6, 80);
             disp_6x8_printf("  Val");
-            disp_bettery(page->BAT);
+            // disp_bettery(page->BAT);
             disp_select_rgb_cw(page->select_num);
             led_rgb_update(page->hue, page->sat, page->val);
             printf("PAGE CHANGED? %d\r\n",page_prev.PAGE);
@@ -414,7 +427,7 @@ void disp_update(struct page_info *page)
         if (page_prev.PAGE != page->PAGE) {
             disp_clear();
             disp_mode(CW_MODE);
-            disp_bettery(page->BAT);
+            // disp_bettery(page->BAT);
             disp_set_pos(3, 8);
             disp_8x16_printf("%4dK", page->color_temp);
             disp_set_pos(3, 72);
@@ -445,7 +458,7 @@ void disp_update(struct page_info *page)
         if (page_prev.PAGE != page->PAGE) { 
             disp_clear();
             disp_mode(SCENES_MODE);
-            disp_bettery(page->BAT);
+            // disp_bettery(page->BAT);
             disp_scenes_select(page->SECN);
         }
         if (page_prev.SECN != page->SECN) {
@@ -467,6 +480,12 @@ void disp_update(struct page_info *page)
     
     } /* End of switch(xxx) */
 
+
+    /* show battery val */
+
+
+
+
     page_prev.PAGE = page->PAGE;
     page_prev.hue = page->hue;
     page_prev.sat = page->sat;
@@ -475,7 +494,7 @@ void disp_update(struct page_info *page)
     page_prev.brightness = page->brightness;
     page_prev.select_num = page->select_num;
     page_prev.SECN = page->SECN;
-    page_prev.BAT = page->BAT;    
+    page_prev.BAT = page->BAT;
 }
 
 

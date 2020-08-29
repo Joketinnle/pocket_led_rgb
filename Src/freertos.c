@@ -77,6 +77,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 osMessageQId batteryQueueHandle;
+osMailQId batteryMailHandle;
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 osThreadId irTaskHandle;
@@ -157,6 +158,9 @@ void MX_FREERTOS_Init(void) {
   osMessageQDef(batteryQueue, 8, uint8_t);
   batteryQueueHandle = osMessageCreate(osMessageQ(batteryQueue), NULL);
 
+  osMailQDef(batteryMail, 2, struct batter_status);
+  batteryMailHandle = osMailCreate(osMailQ(batteryMail), NULL);
+
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 }
@@ -211,12 +215,11 @@ void dispaly_task(void const * argument)
 {
   /* USER CODE BEGIN dispaly_task */
   osEvent msg;
-  bool key_plus_long = false;
-  bool key_minus_long = false;
   uint8_t key_p_m_long_sta = 0;
   uint32_t delay_tmp = 0;
   const uint8_t long_press_delay = 2; /* ms */
   static struct page_info pg_info;
+  struct batter_status *bat_stat;
   osTimerStart(keyTimerHandle, KEY_DELAY_MS);
 
   ssd1306_init();
@@ -226,20 +229,35 @@ void dispaly_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-   msg = osMessageGet(keyQueueHandle, 1);
-   if (msg.status == osEventMessage) {
-      key_p_m_long_sta = key_process(&pg_info, msg.value.v);
-      disp_update(&pg_info);
+    msg = osMessageGet(keyQueueHandle, 1);
+    if (msg.status == osEventMessage) {
+        key_p_m_long_sta = key_process(&pg_info, msg.value.v);
+        disp_update(&pg_info);
+      }
+
+    msg = osMailGet(batteryMailHandle, 1);
+    if (msg.status == osEventMail) {
+        bat_stat = msg.value.p;
+        /* debug start */
+        printf("chrg: %d\r\n",bat_stat->chrg);
+        printf("chrg cmplt: %d\r\n",bat_stat->chrg_cmplt);
+        printf("bat bal: %d\r\n",bat_stat->bat_pct);
+        /* debug end */
+        // battery_process(&pg_info, bat_stat);
+        // disp_update(&pg_info);
+        osMailFree(batteryMailHandle, bat_stat);
     }
+    
 
     /* deal with key long press(plus and minus button) */
    if ((delay_tmp++)%long_press_delay == 0 && key_p_m_long_sta != 0) {
-     if (key_p_m_long_sta == KEY_PLUS_LONG_PRESS) {
-         key_process(&pg_info, KEY_SHORT_PRESS<<(KEY_PLUS*4));
-     } else if (key_p_m_long_sta == KEY_MINUS_LONG_PRESS) {
-         key_process(&pg_info, KEY_SHORT_PRESS<<(KEY_MINUS*4));
-     }
-     disp_update(&pg_info);
+      if (key_p_m_long_sta == KEY_PLUS_LONG_PRESS) {
+          key_process(&pg_info, KEY_SHORT_PRESS<<(KEY_PLUS*4));
+      } else if (key_p_m_long_sta == KEY_MINUS_LONG_PRESS) {
+          key_process(&pg_info, KEY_SHORT_PRESS<<(KEY_MINUS*4));
+      }
+      disp_update(&pg_info);
+
 
    }
     osDelay(1);

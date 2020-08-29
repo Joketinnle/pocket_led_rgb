@@ -23,7 +23,7 @@
 #include "led.h"
 
 extern osMessageQId batteryQueueHandle;
-
+extern osMailQId batteryMailHandle;
 
 
 #endif
