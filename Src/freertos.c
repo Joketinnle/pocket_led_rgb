@@ -85,6 +85,7 @@ osThreadId dispTaskHandle;
 osMessageQId irQueueHandle;
 osMessageQId keyQueueHandle;
 osTimerId keyTimerHandle;
+osTimerId irTimerHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -95,6 +96,7 @@ void StartDefaultTask(void const * argument);
 void ir_task(void const * argument);
 void dispaly_task(void const * argument);
 void key_timer_callback(void const * argument);
+void ir_timer_callback(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -120,6 +122,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of keyTimer */
   osTimerDef(keyTimer, key_timer_callback);
   keyTimerHandle = osTimerCreate(osTimer(keyTimer), osTimerPeriodic, NULL);
+
+  /* definition and creation of irTimer */
+  osTimerDef(irTimer, ir_timer_callback);
+  irTimerHandle = osTimerCreate(osTimer(irTimer), osTimerPeriodic, NULL);
 
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
@@ -196,6 +202,7 @@ void StartDefaultTask(void const * argument)
 void ir_task(void const * argument)
 {
   /* USER CODE BEGIN ir_task */
+  
   /* Infinite loop */
   for(;;)
   {
@@ -267,6 +274,14 @@ void key_timer_callback(void const * argument)
   /* USER CODE BEGIN key_timer_callback */
   key_poll();
   /* USER CODE END key_timer_callback */
+}
+
+/* ir_timer_callback function */
+void ir_timer_callback(void const * argument)
+{
+  /* USER CODE BEGIN ir_timer_callback */
+  ir_timer_callback_func();
+  /* USER CODE END ir_timer_callback */
 }
 
 /* Private application code --------------------------------------------------*/

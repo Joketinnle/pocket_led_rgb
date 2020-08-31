@@ -21,9 +21,11 @@
 #include "battery.h"
 #include "key.h"
 #include "led.h"
+#include "ir.h"
 
 extern osMessageQId batteryQueueHandle;
 extern osMailQId batteryMailHandle;
 
+extern osTimerId irTimerHandle;
 
 #endif
