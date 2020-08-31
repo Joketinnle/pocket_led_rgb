@@ -89,7 +89,7 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PAPin PAPin PAPin PAPin 
                            PAPin */
-  GPIO_InitStruct.Pin = POWER_Pin|MINUS_Pin|PLUS_Pin|MENU_Pin 
+  GPIO_InitStruct.Pin = POWER_Pin|PLUS_Pin|MINUS_Pin|MENU_Pin 
                           |STAT_2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;

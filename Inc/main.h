@@ -64,10 +64,10 @@
 #define IR_EXTI_IRQn EXTI15_10_IRQn
 #define POWER_Pin GPIO_PIN_0
 #define POWER_GPIO_Port GPIOA
-#define MINUS_Pin GPIO_PIN_2
-#define MINUS_GPIO_Port GPIOA
 #define PLUS_Pin GPIO_PIN_1
 #define PLUS_GPIO_Port GPIOA
+#define MINUS_Pin GPIO_PIN_2
+#define MINUS_GPIO_Port GPIOA
 #define MENU_Pin GPIO_PIN_3
 #define MENU_GPIO_Port GPIOA
 #define TEMP_Pin GPIO_PIN_4
