@@ -404,7 +404,6 @@ void disp_update(struct page_info *page)
             // disp_bettery(page->BAT);
             disp_select_rgb_cw(page->select_num);
             led_rgb_update(page->hue, page->sat, page->val);
-            printf("PAGE CHANGED? %d\r\n",page_prev.PAGE);
             break;
         }
         if (page_prev.hue != page->hue) {
@@ -468,23 +467,27 @@ void disp_update(struct page_info *page)
 
     case PAGE_OFF:
         if (page_prev.PAGE != page->PAGE) {
-            led_output_stop();
             disp_clear();
-            if (page->charging == true) {
-                disp_clear();
-                disp_bettery_big(page->BAT);
-            }
         }
-        if (page_prev.BAT != page->BAT)
         break;
     
     } /* End of switch(xxx) */
 
 
     /* show battery val */
-
-
-
+    if (PAGE_OFF == page->PAGE) {
+        if (page->charging == true) 
+            disp_bettery_big(page->BAT);
+        else 
+            disp_clear();
+    } else {
+        if (page->charging == true) {
+            disp_bettery_charging(page->BAT);
+            printf("Screen: ON, Bat charging\r\n");
+        }
+        else
+            disp_bettery(page->BAT);
+    }
 
     page_prev.PAGE = page->PAGE;
     page_prev.hue = page->hue;
@@ -510,13 +513,6 @@ void disp_update(struct page_info *page)
 */
 
 
-
-
-
-/**
- * @todo read battery status
- * 
-*/
 void disp_led_value_init(struct page_info *page_init)
 {
     page_init->PAGE = PAGE_OFF;//PAGE_OFF;//PAGE_SCENES;//PAGE_CW;//PAGE_RGB;
@@ -527,9 +523,6 @@ void disp_led_value_init(struct page_info *page_init)
     page_init->color_temp = 3000;
     page_init->brightness = 0;
     page_init->SECN = NONE;
-    /* @debug */
-    page_init->charging = true;
-    page_init->BAT = REMI_100;
 }
 
 void disp_test(void)

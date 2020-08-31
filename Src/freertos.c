@@ -198,7 +198,7 @@ void ir_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    battery_read_test();
+    bettery_status_check();
     osDelay(1000); /* only for tset */
   }
   /* USER CODE END ir_task */
@@ -233,33 +233,34 @@ void dispaly_task(void const * argument)
     if (msg.status == osEventMessage) {
         key_p_m_long_sta = key_process(&pg_info, msg.value.v);
         disp_update(&pg_info);
-      }
+    }
 
     msg = osMailGet(batteryMailHandle, 1);
     if (msg.status == osEventMail) {
         bat_stat = msg.value.p;
         /* debug start */
-        printf("chrg: %d\r\n",bat_stat->chrg);
-        printf("chrg cmplt: %d\r\n",bat_stat->chrg_cmplt);
-        printf("bat bal: %d\r\n",bat_stat->bat_pct);
+        // printf("chrg: %d\r\n",bat_stat->chrg);
+        // printf("chrg cmplt: %d\r\n",bat_stat->chrg_cmplt);
+        // printf("bat val: %d\r\n",bat_stat->bat_pct);
         /* debug end */
-        // battery_process(&pg_info, bat_stat);
-        // disp_update(&pg_info);
+        battery_process(&pg_info, bat_stat);
+        printf("battery charging: %d\r\n", pg_info.charging);
+        disp_update(&pg_info);
         osMailFree(batteryMailHandle, bat_stat);
     }
     
 
     /* deal with key long press(plus and minus button) */
-   if ((delay_tmp++)%long_press_delay == 0 && key_p_m_long_sta != 0) {
-      if (key_p_m_long_sta == KEY_PLUS_LONG_PRESS) {
-          key_process(&pg_info, KEY_SHORT_PRESS<<(KEY_PLUS*4));
-      } else if (key_p_m_long_sta == KEY_MINUS_LONG_PRESS) {
-          key_process(&pg_info, KEY_SHORT_PRESS<<(KEY_MINUS*4));
-      }
-      disp_update(&pg_info);
+    if ((delay_tmp++)%long_press_delay == 0 && key_p_m_long_sta != 0) {
+        if (key_p_m_long_sta == KEY_PLUS_LONG_PRESS) {
+            key_process(&pg_info, KEY_SHORT_PRESS<<(KEY_PLUS*4));
+        } else if (key_p_m_long_sta == KEY_MINUS_LONG_PRESS) {
+            key_process(&pg_info, KEY_SHORT_PRESS<<(KEY_MINUS*4));
+        }
+        disp_update(&pg_info);
 
 
-   }
+    }
     osDelay(1);
   }
   /* USER CODE END dispaly_task */

@@ -14,7 +14,7 @@ struct batter_status{
 
 void battery_read_test(void);
 
-void bettery_status_changed(void);
+void bettery_status_check(void);
 void battery_process(struct page_info *page, struct batter_status *bat_stat);
 
 

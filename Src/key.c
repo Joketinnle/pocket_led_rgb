@@ -134,9 +134,6 @@ uint8_t key_process(struct page_info *page, uint32_t key_sta)
                     page->color_temp = 3000;
                     page->brightness = 0;
                     page->SECN = NONE;
-                    /* @debug */
-                    page->charging = true;
-                    page->BAT = REMI_100;
                 } else {
                     page->PAGE = PAGE_OFF;
                 }
@@ -221,18 +218,17 @@ uint8_t key_process(struct page_info *page, uint32_t key_sta)
             break;
         }
 				
-				if (page->PAGE == PAGE_OFF)
-						continue;
+        if (page->PAGE == PAGE_OFF)
+                continue;
         if (page->select_num < CW_TEMP)
             page->PAGE = PAGE_RGB;
-        else if (page->select_num == CW_TEMP || page->select_num == CW_BRIGHT)\
+        else if (page->select_num == CW_TEMP || page->select_num == CW_BRIGHT)
             page->PAGE = PAGE_CW;
         else
             page->PAGE = PAGE_SCENES;
     }
 
     return ret;
-
 }
 
 
