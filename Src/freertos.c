@@ -180,7 +180,8 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+      bettery_status_check();
+      osDelay(1000);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -198,7 +199,7 @@ void ir_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    bettery_status_check();
+    
     osDelay(1000); /* only for tset */
   }
   /* USER CODE END ir_task */
@@ -238,13 +239,7 @@ void dispaly_task(void const * argument)
     msg = osMailGet(batteryMailHandle, 1);
     if (msg.status == osEventMail) {
         bat_stat = msg.value.p;
-        /* debug start */
-        // printf("chrg: %d\r\n",bat_stat->chrg);
-        // printf("chrg cmplt: %d\r\n",bat_stat->chrg_cmplt);
-        // printf("bat val: %d\r\n",bat_stat->bat_pct);
-        /* debug end */
         battery_process(&pg_info, bat_stat);
-        printf("battery charging: %d\r\n", pg_info.charging);
         disp_update(&pg_info);
         osMailFree(batteryMailHandle, bat_stat);
     }

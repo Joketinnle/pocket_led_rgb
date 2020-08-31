@@ -15,26 +15,6 @@
 
 extern ADC_HandleTypeDef hadc1;
 
-void battery_read_test(void)
-{
-    uint16_t adc_tmp[2];
-    float adc_val[2];
-    
-    for (uint8_t i=0; i<2; i++) {
-        HAL_ADC_Start(&hadc1);
-        HAL_ADC_PollForConversion(&hadc1, 0xffff);
-        adc_tmp[i] = HAL_ADC_GetValue(&hadc1);
-        
-    }
-    HAL_ADC_Stop(&hadc1);
-
-    adc_val[0] = (float)(adc_tmp[0]&0x0fff)*3.3/4096;
-    adc_val[1] = (float)(adc_tmp[1]&0x0fff)*3.3/4096;
-
-    printf("adc ch1 val: %f\r\n", adc_val[0]);
-    printf("adc ch2 val: %f\r\n", adc_val[1]);
-}
-
 static void adc_read(struct voltage *volt)
 {
     uint16_t adc_tmp[2];
@@ -156,11 +136,7 @@ void bettery_status_check(void)
 }
 
 void battery_process(struct page_info *page, struct batter_status *bat_stat)
-{
-    printf("bat charging: %d\r\n", bat_stat->chrg);
-    printf("bat chrg cmplt: %d\r\n", bat_stat->chrg_cmplt);
-    printf("bat val: %d\r\n",bat_stat->bat_pct);
-    
+{    
     page->charging = bat_stat->chrg;
 
     if (bat_stat->chrg_cmplt == true)

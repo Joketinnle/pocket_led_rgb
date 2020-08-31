@@ -128,9 +128,9 @@ void led_cw_update(uint16_t color_tmp, uint8_t color_bright)
     led.c = (uint8_t)(cold_pct * bright_pct * 255);
     led.w = (uint8_t)(warm_pct * bright_pct * 255);
 
-    printf("color_tmp: %d\r\n", color_tmp);
-    printf("cold_pct %f, warm_pct %f\r\n", cold_pct, warm_pct);
-    printf("c: %d, w: %d\r\n",led.c,led.w);
+    // printf("color_tmp: %d\r\n", color_tmp);
+    // printf("cold_pct %f, warm_pct %f\r\n", cold_pct, warm_pct);
+    // printf("c: %d, w: %d\r\n",led.c,led.w);
     led_output_value(&led);
     led_start_cw();
 }

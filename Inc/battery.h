@@ -12,8 +12,6 @@ struct batter_status{
     enum BATTERY_STATUS bat_pct;
 };
 
-void battery_read_test(void);
-
 void bettery_status_check(void);
 void battery_process(struct page_info *page, struct batter_status *bat_stat);
 
