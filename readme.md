@@ -6,5 +6,20 @@ Build by MDK5
 
 Hardware picture  👇
 
+No picture for now ;)
 
+- [x] LED
+  - [x] RGB
+  - [x] C&W
+  - [ ] SECEN
+- [x] DISPLAY
+  - [x] RGB MODE
+  - [x] C&W MODE
+  - [x] SECEN MODE
+  - [ ] CHARGING WHEN IT'S POWER OFF
+- [ ] IR
+- [ ] TEST
+  - [ ] BATTERY TEST
+  - [ ] PRESSURE TEST
+  - [ ] POWER MAX TEST
 

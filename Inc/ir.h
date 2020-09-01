@@ -9,9 +9,12 @@
 #define HEADER_LOW                  4500
 #define DATA_0_HIGH                 590
 #define DATA_0_LOW                  565
-#define DATA_1_HIGH                 1664         
-#define DATA_1_LOW                  566
+#define DATA_1_HIGH                 566         
+#define DATA_1_LOW                  1664
 
+#define REPEAT_LOW                  9566
+
+#define IR_ADDRESS                  0x00
 
 
 enum NEC_CODE_STATUE {
@@ -23,17 +26,19 @@ enum NEC_CODE_STATUE {
 };
 
 
-enum IR_CMD {
-    
+//enum IR_CMD {
+//    
 
 
-};
+//};
 
 
 
 struct ir_data{
-    
-
+   uint8_t addr;
+   uint8_t addr_inverse;
+   uint8_t cmd;
+   uint8_t cmd_inverse;
 };
 
 
