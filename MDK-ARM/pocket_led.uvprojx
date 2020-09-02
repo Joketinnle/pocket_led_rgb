@@ -478,6 +478,11 @@
               <FileType>1</FileType>
               <FilePath>../Src/stm32f1xx_hal_timebase_TIM.c</FilePath>
             </File>
+            <File>
+              <FileName>ir.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ir.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

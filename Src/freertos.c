@@ -77,6 +77,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 osMessageQId batteryQueueHandle;
+osMessageQId ircmdQueueHandle;
 osMailQId batteryMailHandle;
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
@@ -164,6 +165,9 @@ void MX_FREERTOS_Init(void) {
   osMessageQDef(batteryQueue, 8, uint8_t);
   batteryQueueHandle = osMessageCreate(osMessageQ(batteryQueue), NULL);
 
+  osMessageQDef(ircmdQueue, 32, uint8_t);
+  ircmdQueueHandle = osMessageCreate(osMessageQ(ircmdQueue), NULL);
+
   osMailQDef(batteryMail, 2, struct batter_status);
   batteryMailHandle = osMailCreate(osMailQ(batteryMail), NULL);
 
@@ -202,12 +206,15 @@ void StartDefaultTask(void const * argument)
 void ir_task(void const * argument)
 {
   /* USER CODE BEGIN ir_task */
-  
+  osEvent msg;
   /* Infinite loop */
   for(;;)
   {
-    
-    osDelay(1000); /* only for tset */
+    msg = osMessageGet(ircmdQueueHandle, 1);
+    if (msg.status == osEventMessage) {
+        printf("ir cmd: %#x\r\n", msg.value.v);
+    }
+    osDelay(1); /* only for tset */
   }
   /* USER CODE END ir_task */
 }

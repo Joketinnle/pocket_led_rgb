@@ -24,6 +24,7 @@
 #include "ir.h"
 
 extern osMessageQId batteryQueueHandle;
+extern osMessageQId ircmdQueueHandle;
 extern osMailQId batteryMailHandle;
 
 extern osTimerId irTimerHandle;
