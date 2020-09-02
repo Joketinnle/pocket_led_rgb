@@ -476,6 +476,7 @@ void disp_update(struct page_info *page)
 
     /* show battery val */
     if (PAGE_OFF == page->PAGE) {
+        led_output_stop();
         if (page->charging == true) 
             disp_bettery_big(page->BAT);
         else 

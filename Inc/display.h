@@ -27,8 +27,6 @@ enum VALUE_SELECT {
     SCENES_PG = 5 /* SECNES PAGE */
 };
 
-
-
 enum PAGE_SELECT {
     PAGE_RGB,
     PAGE_CW,

@@ -267,9 +267,10 @@ void dispaly_task(void const * argument)
             key_process(&pg_info, KEY_SHORT_PRESS<<(KEY_MINUS*4));
         }
         disp_update(&pg_info);
-
-
     }
+    /* ir cmd */
+    
+
     osDelay(1);
   }
   /* USER CODE END dispaly_task */

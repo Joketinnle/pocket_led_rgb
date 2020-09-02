@@ -107,9 +107,12 @@ void key_poll(void)
 uint8_t key_process(struct page_info *page, uint32_t key_sta)
 {
     enum KEY_TYPE type;
+    static struct page_info last_page;
+    static bool first_time_init = true;
     uint8_t key_act;
     uint8_t i;//KEY_NUM_MAX
     uint8_t ret = KEY_NONE_ACTION;
+    
     for (i=0; i<KEY_NUM_MAX; i++) {
         type = i;
         key_act = (key_sta>>(i*4)) & 0x0000000F;
@@ -125,7 +128,7 @@ uint8_t key_process(struct page_info *page, uint32_t key_sta)
                 if (page->select_num >= 1)
                     page->select_num--;
             } else if (key_act == KEY_LONG_PRESS) {
-                if (page->PAGE == PAGE_OFF) {
+                if (page->PAGE == PAGE_OFF && true == first_time_init) {
                     page->PAGE = PAGE_RGB;//PAGE_OFF;//PAGE_SCENES;//PAGE_CW;//PAGE_RGB;
                     page->select_num = RGB_HUE;
                     page->hue = 0;
@@ -134,7 +137,11 @@ uint8_t key_process(struct page_info *page, uint32_t key_sta)
                     page->color_temp = 3000;
                     page->brightness = 0;
                     page->SECN = NONE;
-                } else {
+                    first_time_init = false;
+                } else if (page->PAGE == PAGE_OFF && false == first_time_init) {
+                    page->PAGE = last_page.PAGE;
+                    page->select_num = last_page.select_num;
+                }else {
                     page->PAGE = PAGE_OFF;
                 }
             }
@@ -226,6 +233,10 @@ uint8_t key_process(struct page_info *page, uint32_t key_sta)
             page->PAGE = PAGE_CW;
         else
             page->PAGE = PAGE_SCENES;
+    }
+    if (page->PAGE != PAGE_OFF) {
+        last_page.PAGE = page->PAGE;
+        last_page.select_num = page->select_num;
     }
 
     return ret;

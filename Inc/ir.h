@@ -1,20 +1,43 @@
 #ifndef __ir_h
 #define __ir_h
 
-#define IR_TIMEOUT_MS               100  /* the max blanking is 95ms (repeat data) */
 
-#define ERROR_DIFF                  180 /* us */
+/**
+ * ir.c 
+ * this file is for reading ir cmd that come from remote
+ * NEC-code and 21 buttons
+ * @todo ir_recv gpio should use TIM2 CH1 or CH2 port.
+ * So that it can use Input capture to receive ir data;
+ * <.......... button map ............>
+ *      CH-     CH      Ch+             
+ *      ⏮     ⏭      ⏯
+ *      -       +       EQ
+ *      0       100+    200+
+ *      1       2       3
+ *      4       5       6
+ *      7       8       9
+ * 
+ * <.......... discribtion ............>
+ * CH- : [RGB] Hue-          [C&W] None
+ * CH  : switch RGB and C&W mode
+ * CH+ : [RGB] Hue+          [C&W] None
+ * ⏮ : [RGB] Saturation-    [C&W] Color_temp-
+ * ⏭ : [RGB] Saturation+    [C&W] Color_temp+
+ * ⏯ : [RGB][C&W] on/off
+ *  -  : [RGB] Value-        [C&W] Bright-
+ *  +  : [RGB] Value+        [C&W] Bright+
+ * EQ  :
+ * 100+:
+ * 200+:
+ * 0~9 : Scene 0~9
+ * 
+ * Wanna know more about NEC Coding vist this website 👇
+ *                                          https://irext.net/doc/
+ * The owner of this website is @strawmanbobi he is a great coder.
+ * And he is so kind and full of open source spirit.
+ * 
+*/
 
-#define HEADER_HIGH                 9000
-#define HEADER_LOW                  4500
-#define DATA_0_HIGH                 640
-#define DATA_0_LOW                  520
-#define DATA_1_HIGH                 640         
-#define DATA_1_LOW                  1595
-
-#define REPEAT_LOW                  30061
-
-#define IR_ADDRESS                  0x00
 
 
 /* .......... remote button map .............*/
@@ -41,7 +64,20 @@
 #define IR_NINE                         0x4A
 
 
+#define IR_TIMEOUT_MS                   100  /* the max blanking is 95ms (repeat data) */
 
+#define ERROR_DIFF                      180 /* us */
+
+#define HEADER_HIGH                     9000
+#define HEADER_LOW                      4500
+#define DATA_0_HIGH                     640
+#define DATA_0_LOW                      520
+#define DATA_1_HIGH                     640         
+#define DATA_1_LOW                      1595
+
+#define REPEAT_LOW                      30061
+
+#define IR_ADDRESS                      0x00
 
 
 enum NEC_CODE_STATUE {
@@ -67,7 +103,6 @@ struct ir_data{
    uint8_t cmd;
    uint8_t cmd_inverse;
 };
-
 
 
 void ir_timer_callback_func(void);

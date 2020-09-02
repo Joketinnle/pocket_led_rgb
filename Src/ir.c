@@ -2,42 +2,6 @@
 #include "ir.h"
 
 
-
-/**
- * ir.c 
- * this file is for reading ir cmd that come from remote
- * NEC-code and 21 buttons
- * @todo ir_recv gpio should use TIM2 CH1 or CH2 port.
- * So that it can use Input capture to receive ir data;
- * <.......... button map ............>
- *      CH-     CH      Ch+             
- *      ⏮     ⏭      ⏯
- *      -       +       EQ
- *      0       100+    200+
- *      1       2       3
- *      4       5       6
- *      7       8       9
- * 
- * <.......... discribtion ............>
- * CH- : [RGB] Hue-          [C&W] None
- * CH  : switch RGB and C&W mode
- * CH+ : [RGB] Hue+          [C&W] None
- * ⏮ : [RGB] Saturation-    [C&W] Color_temp-
- * ⏭ : [RGB] Saturation+    [C&W] Color_temp+
- * ⏯ : [RGB][C&W] on/off
- *  -  : [RGB] Value-        [C&W] Bright-
- *  +  : [RGB] Value+        [C&W] Bright+
- * EQ  :
- * 100+:
- * 200+:
- * 0~9 : Scene 0~9
- * 
- * Wanna know more about NEC Coding vist this website 👇
- *                                          https://irext.net/doc/
- * The owner of this website is @strawmanbobi he is a great coder.
- * And he is so kind and full of open source spirit.
- * 
-*/
 #define DEBUG_IR                       0
 
 #if DEBUG_IR
@@ -130,7 +94,7 @@ static void ir_cmd_check(uint32_t *buf, struct ir_data *data)
     }
 }
 
-static ErrorStatus ir_cmd_process(struct ir_data *data)
+static ErrorStatus ir_data_check(struct ir_data *data)
 {
     if ((data->addr ^ data->addr_inverse) != 0xFF) {
         deubg_ir("addr check failed %#x %#x\r\n", data->addr, data->addr_inverse);
@@ -217,7 +181,7 @@ static void ir_read_data(void)
 
             if (g_ir_recv_cnt == 32) {
                 ir_cmd_check(g_ir_raw_data, &ir_dat);
-                if (SUCCESS == ir_cmd_process(&ir_dat)) {
+                if (SUCCESS == ir_data_check(&ir_dat)) {
                     osMessagePut(ircmdQueueHandle, ir_dat.cmd, 0);
                     g_ir_raw_data_cnt = 0;
                     g_ir_recv_cnt = 0;
@@ -266,4 +230,95 @@ void ir_timer_callback_func(void)
     ir_data_init(&ir_dat);
     deubg_ir("done\r\n\r\n");
     osTimerStop(irTimerHandle);
+}
+
+
+void ir_cmd_process(uint8_t ir_cmd, struct page_info *page)
+{
+
+    switch (ir_cmd) {
+    case IR_CH_MINUS:
+
+        break;
+
+    case IR_CH_ENTER:
+
+        break;
+
+    case IR_CH_PLUS:
+
+        break;
+
+    case IR_PREV:
+
+        break;
+
+    case IR_NEXT:
+
+        break;
+
+    case IR_ONOFF:
+        
+        break;
+
+    case IR_VOL_MINUS:
+
+        break;
+
+    case IR_VOL_PLUS:
+
+        break;
+    
+    case IR_EQ:
+
+        break;
+
+    case IR_ZERO:
+
+        break;
+
+    case IR_100_PLUS:
+
+        break;
+
+    case IR_200_PLUS:
+
+        break;
+
+    case IR_ONE:
+
+        break;
+
+    case IR_TWO:
+
+        break;
+
+    case IR_THREE:
+
+        break;
+
+    case IR_FOUR:
+
+        break;
+
+    case IR_FIVE:
+
+        break;
+
+    case IR_SIX:
+
+        break;
+
+    case IR_SEVEN:
+
+        break;
+
+    case IR_EIGHT:
+
+        break;
+
+    case IR_NINE:
+
+        break;
+    }
 }
