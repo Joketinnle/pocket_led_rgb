@@ -206,14 +206,11 @@ void StartDefaultTask(void const * argument)
 void ir_task(void const * argument)
 {
   /* USER CODE BEGIN ir_task */
-  osEvent msg;
+
   /* Infinite loop */
   for(;;)
   {
-    msg = osMessageGet(ircmdQueueHandle, 1);
-    if (msg.status == osEventMessage) {
-        printf("ir cmd: %#x\r\n", msg.value.v);
-    }
+
     osDelay(1); /* only for tset */
   }
   /* USER CODE END ir_task */
@@ -232,11 +229,11 @@ void dispaly_task(void const * argument)
   osEvent msg;
   uint8_t key_p_m_long_sta = 0;
   uint32_t delay_tmp = 0;
-  const uint8_t long_press_delay = 2; /* ms */
+  const uint8_t long_press_delay = 10; /* ms */
   static struct page_info pg_info;
   struct batter_status *bat_stat;
   osTimerStart(keyTimerHandle, KEY_DELAY_MS);
-
+  ir_recv_deinit();
   ssd1306_init();
   disp_led_value_init(&pg_info);
   disp_update(&pg_info);
@@ -244,20 +241,27 @@ void dispaly_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    msg = osMessageGet(keyQueueHandle, 1);
+    msg = osMessageGet(keyQueueHandle, 0);
     if (msg.status == osEventMessage) {
         key_p_m_long_sta = key_process(&pg_info, msg.value.v);
         disp_update(&pg_info);
     }
 
-    msg = osMailGet(batteryMailHandle, 1);
+    msg = osMailGet(batteryMailHandle, 0);
     if (msg.status == osEventMail) {
         bat_stat = msg.value.p;
         battery_process(&pg_info, bat_stat);
         disp_update(&pg_info);
         osMailFree(batteryMailHandle, bat_stat);
     }
-    
+
+    /* ir cmd */
+    msg = osMessageGet(ircmdQueueHandle, 0);
+    if (msg.status == osEventMessage) {
+        printf("ir cmd: %#x\r\n", msg.value.v);
+        ir_cmd_process(msg.value.v, &pg_info);
+        disp_update(&pg_info);
+    }
 
     /* deal with key long press(plus and minus button) */
     if ((delay_tmp++)%long_press_delay == 0 && key_p_m_long_sta != 0) {
@@ -268,7 +272,7 @@ void dispaly_task(void const * argument)
         }
         disp_update(&pg_info);
     }
-    /* ir cmd */
+
     
 
     osDelay(1);

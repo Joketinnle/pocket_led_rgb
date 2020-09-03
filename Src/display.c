@@ -403,7 +403,8 @@ void disp_update(struct page_info *page)
             disp_6x8_printf("  Val");
             // disp_bettery(page->BAT);
             disp_select_rgb_cw(page->select_num);
-            led_rgb_update(page->hue, page->sat, page->val);
+            if (page->LED_SWITCH == ON)
+                led_rgb_update(page->hue, page->sat, page->val);
             break;
         }
         if (page_prev.hue != page->hue) {
@@ -419,7 +420,8 @@ void disp_update(struct page_info *page)
         if (page_prev.select_num != page->select_num) {
             disp_select_rgb_cw(page->select_num);
         }
-        led_rgb_update(page->hue, page->sat, page->val);
+        if (page->LED_SWITCH == ON)
+            led_rgb_update(page->hue, page->sat, page->val);
         break;
 
     case PAGE_CW:
@@ -436,7 +438,8 @@ void disp_update(struct page_info *page)
             disp_set_pos(6,72);
             disp_6x8_printf("Bright");
             disp_select_rgb_cw(page->select_num);
-            led_cw_update(page->color_temp, page->brightness);
+            if (page->LED_SWITCH == ON)
+                led_cw_update(page->color_temp, page->brightness);
             break;
         }
         if (page_prev.color_temp != page->color_temp) {
@@ -450,7 +453,8 @@ void disp_update(struct page_info *page)
         if (page_prev.select_num != page->select_num) {
             disp_select_rgb_cw(page->select_num);
         }
-        led_cw_update(page->color_temp, page->brightness);
+        if (page->LED_SWITCH == ON)
+            led_cw_update(page->color_temp, page->brightness);
         break;
 
     case PAGE_SCENES:
@@ -512,7 +516,6 @@ void disp_update(struct page_info *page)
  *7 Hue   Sat   Val
  *8 
 */
-
 
 void disp_led_value_init(struct page_info *page_init)
 {

@@ -30,7 +30,6 @@ static uint8_t ir_button_array[21] = {
     IR_SEVEN,       IR_EIGHT,       IR_NINE
 };
 
-
 static void ir_data_init(struct ir_data *data)
 {
     data->addr = 0x00;
@@ -232,41 +231,117 @@ void ir_timer_callback_func(void)
     osTimerStop(irTimerHandle);
 }
 
+void ir_recv_init(void)
+{
+    HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+}
+
+void ir_recv_deinit(void)
+{
+    HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
+}
 
 void ir_cmd_process(uint8_t ir_cmd, struct page_info *page)
 {
-
     switch (ir_cmd) {
     case IR_CH_MINUS:
-
+        page->PAGE = PAGE_RGB;
+        page->select_num = RGB_HUE;
+        if (page->hue > 5)
+            page->hue -= 5;
+        else
+            page->hue = 0;
         break;
 
     case IR_CH_ENTER:
-
+        if (page->PAGE == PAGE_RGB) {
+            page->PAGE = PAGE_CW;
+            page->select_num = CW_TEMP;
+        } else { 
+            page->PAGE = PAGE_RGB;
+            page->select_num = RGB_HUE;
+        }
         break;
 
     case IR_CH_PLUS:
-
+        page->PAGE = PAGE_RGB;
+        if (page->hue < 355)
+            page->hue += 5;
+        else 
+            page->hue = 360;
         break;
 
     case IR_PREV:
-
+        if (page->PAGE == PAGE_RGB) {
+            page->select_num = RGB_SAT;
+            if (page->sat > 5)
+                page->sat -= 5;
+            else 
+                page->sat = 0;
+        } else if (page->PAGE == PAGE_CW) {
+            page->select_num = CW_TEMP;
+            if (page->color_temp > 3050)
+                page->color_temp -= 50;
+            else 
+                page->color_temp = 3000;
+        }
         break;
 
     case IR_NEXT:
-
+        if (page->PAGE == PAGE_RGB) {
+            page->select_num = RGB_SAT;
+            if (page->sat < 95)
+                page->sat += 5;
+            else 
+                page->sat = 100;
+        } else if (page->PAGE == PAGE_CW) {
+            page->select_num = CW_TEMP;
+            if (page->color_temp < 6950)
+                page->color_temp += 50;
+            else 
+                page->color_temp = 7000;
+        }
         break;
 
     case IR_ONOFF:
-        
+        if (page->LED_SWITCH == ON) {
+            page->LED_SWITCH = OFF;
+            led_output_stop();
+        } else if (page->LED_SWITCH == OFF) {
+            page->LED_SWITCH = ON;
+        }
         break;
 
     case IR_VOL_MINUS:
-
+        if (page->PAGE == PAGE_RGB) {
+            page->select_num = RGB_VAL;
+            if (page->val > 5)
+                page->val -= 5;
+            else 
+                page->val = 0;
+        } else if (page->PAGE == PAGE_CW) {
+            page->select_num = CW_BRIGHT;
+            if (page->brightness > 5)
+                page->brightness -= 5;
+            else 
+                page->brightness = 0;
+        }
         break;
 
     case IR_VOL_PLUS:
-
+        if (page->PAGE == PAGE_RGB) {
+            page->select_num = RGB_VAL;
+            if (page->val <95 )
+                page->val += 5;
+            else 
+                page->val = 100;
+        } else if (page->PAGE == PAGE_CW) {
+            page->select_num = CW_BRIGHT;
+            if (page->brightness < 95)
+                page->brightness += 5;
+            else 
+                page->brightness = 100;
+        }
         break;
     
     case IR_EQ:

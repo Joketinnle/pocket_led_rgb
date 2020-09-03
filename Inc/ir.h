@@ -38,8 +38,6 @@
  * 
 */
 
-
-
 /* .......... remote button map .............*/
 #define IR_CH_MINUS                     0x45
 #define IR_CH_ENTER                     0x46
@@ -104,7 +102,10 @@ struct ir_data{
    uint8_t cmd_inverse;
 };
 
+void ir_recv_init(void);
+void ir_recv_deinit(void);
 
 void ir_timer_callback_func(void);
 
+void ir_cmd_process(uint8_t ir_cmd, struct page_info *page);
 #endif

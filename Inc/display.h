@@ -50,7 +50,7 @@ enum SCENES_SELECT {
     SCN_LAST
 };
 
-enum BATTERY_STATUS{
+enum BATTERY_STATUS {
     REMI_0 = 0,
     REMI_20 ,
     REMI_40 ,
@@ -65,6 +65,11 @@ enum BATTERY_STATUS{
     CHRG_100
 };
 
+enum LED_STATUS {
+    OFF = 0,
+    ON
+};
+
 struct page_info {
     enum PAGE_SELECT PAGE;
     enum VALUE_SELECT select_num;
@@ -76,6 +81,7 @@ struct page_info {
     enum SCENES_SELECT SECN;
     bool charging;
     enum BATTERY_STATUS BAT;
+    enum LED_STATUS LED_SWITCH;
 };
 
 void disp_led_value_init(struct page_info *page_init);

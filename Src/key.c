@@ -137,11 +137,14 @@ uint8_t key_process(struct page_info *page, uint32_t key_sta)
                     page->color_temp = 3000;
                     page->brightness = 0;
                     page->SECN = NONE;
+                    ir_recv_init();
                     first_time_init = false;
                 } else if (page->PAGE == PAGE_OFF && false == first_time_init) {
+                    ir_recv_init();
                     page->PAGE = last_page.PAGE;
                     page->select_num = last_page.select_num;
-                }else {
+                } else {
+                    ir_recv_deinit();
                     page->PAGE = PAGE_OFF;
                 }
             }
@@ -156,6 +159,7 @@ uint8_t key_process(struct page_info *page, uint32_t key_sta)
 
         case KEY_PLUS:
             if (key_act == KEY_SHORT_PRESS) {
+                page->LED_SWITCH = ON;
                 switch (page->select_num) {
                 case RGB_HUE:
                     if (++(page->hue) > 360)
@@ -191,6 +195,7 @@ uint8_t key_process(struct page_info *page, uint32_t key_sta)
         
         case KEY_MINUS:
             if (key_act == KEY_SHORT_PRESS) {
+                page->LED_SWITCH = ON;
                 switch (page->select_num) {
                 case RGB_HUE:
                     if ((page->hue--) == 0)
