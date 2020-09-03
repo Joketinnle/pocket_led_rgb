@@ -24,4 +24,4 @@ No picture for now ;)
 - [ ] TEST
   - [ ] BATTERY TEST
   - [ ] PRESSURE TEST
-  - [ ] POWER MAX TEST
+  - [ ] POWER SOURCE TEST
