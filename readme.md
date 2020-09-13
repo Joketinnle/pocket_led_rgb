@@ -21,6 +21,8 @@ No picture for now ;)
   - [x] RGB
   - [x] C&W
   - [ ] SECEN
+- [ ] TEMPERATURE CHECK
+  - [ ] AUTO POWER OFF
 - [ ] TEST
   - [ ] BATTERY TEST
   - [ ] PRESSURE TEST
