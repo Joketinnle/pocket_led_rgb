@@ -493,7 +493,13 @@ void disp_update(struct page_info *page)
         else
             disp_bettery(page->BAT);
     }
-
+    /* special efficiency mode aka scens mode*/
+    if (page->PAGE == PAGE_SCENES) {
+        osMessagePut(secnQueueHandle, page->SECN, 0);
+    } else {
+        if (page_prev.PAGE == PAGE_SCENES)
+            osMessagePut(secnQueueHandle, NONE, 0);
+    }
     page_prev.PAGE = page->PAGE;
     page_prev.hue = page->hue;
     page_prev.sat = page->sat;

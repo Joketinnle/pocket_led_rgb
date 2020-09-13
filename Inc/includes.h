@@ -25,6 +25,7 @@
 
 extern osMessageQId batteryQueueHandle;
 extern osMessageQId ircmdQueueHandle;
+extern osMessageQId secnQueueHandle;
 extern osMailQId batteryMailHandle;
 
 extern osTimerId irTimerHandle;

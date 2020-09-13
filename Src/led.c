@@ -135,4 +135,73 @@ void led_cw_update(uint16_t color_tmp, uint8_t color_bright)
     led_start_cw();
 }
 
+static void led_scen_police(void)
+{
+    led_bright_t led_val;
+    led_val.r = 0;
+    led_val.g = 0;
+    led_val.b = 0;
+    led_val.c = 0;
+    led_val.w = 0;
+
+
+    for (uint8_t i=0; i<6; i++) {
+        led_val.r = 255;
+        led_val.b = 0;        
+        led_output_value(&led_val);
+        osDelay(50);
+        led_val.r = 0;
+        led_val.b = 0;    
+        led_output_value(&led_val);
+        osDelay(50);
+    }
+
+    osDelay(200);
+
+    for (uint8_t i=0; i<6; i++) {
+        led_val.r = 0;
+        led_val.b = 255;
+        led_output_value(&led_val);
+        osDelay(50);
+        led_val.r = 0;
+        led_val.b = 0;    
+        led_output_value(&led_val);
+        osDelay(50);
+    }
+    osDelay(200);
+}
+
+void led_scen(enum SCENES_SELECT SCENES)
+{
+    switch (SCENES) {
+    case NONE:
+        led_output_stop();
+        break;
+    case POLICE:
+        led_output_start();
+        led_scen_police();
+        break;
+
+    case AMBULIENCE:
+    
+        break;
+    
+    case LIGHTNING:
+
+        break;
+
+    case FIRE:
+
+        break;
+    
+    case COLORCHASE:
+
+        break;
+
+    default:
+        led_output_stop();
+        break;
+    }
+}
+
 

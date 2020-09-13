@@ -78,10 +78,11 @@
 /* USER CODE BEGIN Variables */
 osMessageQId batteryQueueHandle;
 osMessageQId ircmdQueueHandle;
+osMessageQId secnQueueHandle;
 osMailQId batteryMailHandle;
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
-osThreadId irTaskHandle;
+osThreadId secnTaskHandle;
 osThreadId dispTaskHandle;
 osMessageQId irQueueHandle;
 osMessageQId keyQueueHandle;
@@ -94,7 +95,7 @@ osTimerId irTimerHandle;
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
-void ir_task(void const * argument);
+void secn_task(void const * argument);
 void dispaly_task(void const * argument);
 void key_timer_callback(void const * argument);
 void ir_timer_callback(void const * argument);
@@ -137,12 +138,12 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 64);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* definition and creation of irTask */
-  osThreadDef(irTask, ir_task, osPriorityIdle, 0, 128);
-  irTaskHandle = osThreadCreate(osThread(irTask), NULL);
+  /* definition and creation of secnTask */
+  osThreadDef(secnTask, secn_task, osPriorityIdle, 0, 128);
+  secnTaskHandle = osThreadCreate(osThread(secnTask), NULL);
 
   /* definition and creation of dispTask */
-  osThreadDef(dispTask, dispaly_task, osPriorityIdle, 0, 256);
+  osThreadDef(dispTask, dispaly_task, osPriorityHigh, 0, 256);
   dispTaskHandle = osThreadCreate(osThread(dispTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -167,6 +168,9 @@ void MX_FREERTOS_Init(void) {
 
   osMessageQDef(ircmdQueue, 32, uint8_t);
   ircmdQueueHandle = osMessageCreate(osMessageQ(ircmdQueue), NULL);
+
+  osMessageQDef(secnQueue, 8, enum SCENES_SELECT);
+  secnQueueHandle = osMessageCreate(osMessageQ(secnQueue), NULL);
 
   osMailQDef(batteryMail, 2, struct batter_status);
   batteryMailHandle = osMailCreate(osMailQ(batteryMail), NULL);
@@ -196,24 +200,38 @@ void StartDefaultTask(void const * argument)
   /* USER CODE END StartDefaultTask */
 }
 
-/* USER CODE BEGIN Header_ir_task */
+/* USER CODE BEGIN Header_secn_task */
 /**
-* @brief Function implementing the irTask thread.
+* @brief Function implementing the secnTask thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_ir_task */
-void ir_task(void const * argument)
+/* USER CODE END Header_secn_task */
+void secn_task(void const * argument)
 {
-  /* USER CODE BEGIN ir_task */
-
+  /* USER CODE BEGIN secn_task */
+  osEvent msg;
+  enum SCENES_SELECT SCENES;
+  bool scenes_off = false;
   /* Infinite loop */
   for(;;)
   {
-
-    osDelay(1); /* only for tset */
+    msg = osMessageGet(secnQueueHandle, 6);
+    if (msg.status == osEventMessage) {
+        SCENES = msg.value.v;
+    }
+    if (SCENES != NONE) {
+        // led_scen(SCENES);
+        scenes_off = false;
+    } else {
+        if (scenes_off == false) {
+            scenes_off = true;
+            led_scen(SCENES);
+      } 
+    }
+    osDelay(1);
   }
-  /* USER CODE END ir_task */
+  /* USER CODE END secn_task */
 }
 
 /* USER CODE BEGIN Header_dispaly_task */
