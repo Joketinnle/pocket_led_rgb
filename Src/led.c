@@ -251,7 +251,62 @@ static void led_scen_lightning(void)
     osDelay(10);
 }
 
-void 
+void led_scen_fire(void)
+{
+    static uint16_t tmp = 0;
+    static led_bright_t led;
+    static hsv_t hsv;
+    static int val = 100;
+    static uint8_t cnt = 0;
+
+    hsv.h = 5;
+    hsv.s = 100;
+    
+    if(tmp == 0)
+        val = 100;
+    
+    if (tmp < 20) {
+        val -= 3;
+    } else if (tmp >= 20 && tmp < 40) {
+        val += 3;
+        if (tmp == 39 && cnt < 1) {
+            cnt++;
+            tmp = 0;
+            val = 100;
+        }
+    } 
+    else if (tmp >= 40 && tmp < 42) {
+        val -= 30;
+    } else if (tmp >= 42 && tmp < 44) {
+        val += 30;
+    } else if (tmp >= 44 && tmp < 46) {
+        val -= 30;
+    } else if (tmp >= 46 && tmp < 48) {
+        val += 30;
+    } else if (tmp >= 48 && tmp < 50) {
+        val -= 30;
+    } else if (tmp >= 50 && tmp < 52) {
+        val += 30;
+    } else if (tmp == 52){
+        tmp = 0;
+        cnt = 0;
+    }
+
+    tmp++;
+    if (val > 100)
+        val = 100;
+    else if (val < 0)
+        val = 0;
+    hsv.v = (uint8_t)val;
+    hsv2rgb(&hsv, &led);
+    led_output_value(&led);
+    if (tmp<40)
+        osDelay(100);    
+    else if (tmp > 40 && (tmp-40)%4)
+        osDelay(20);
+    else if (tmp > 40 && !((tmp-40)%4))
+        osDelay(100);
+}
 
 void led_scen(enum SCENES_SELECT SCENES)
 {
@@ -275,7 +330,8 @@ void led_scen(enum SCENES_SELECT SCENES)
         break;
 
     case FIRE:
-
+        led_output_start();
+        led_scen_fire();
         break;
     
     case COLORCHASE:
