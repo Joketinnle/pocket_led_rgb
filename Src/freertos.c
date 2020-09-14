@@ -216,12 +216,12 @@ void secn_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    msg = osMessageGet(secnQueueHandle, 6);
+    msg = osMessageGet(secnQueueHandle, 0);
     if (msg.status == osEventMessage) {
         SCENES = msg.value.v;
     }
     if (SCENES != NONE) {
-        // led_scen(SCENES);
+        led_scen(SCENES);
         scenes_off = false;
     } else {
         if (scenes_off == false) {

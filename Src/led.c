@@ -137,6 +137,7 @@ void led_cw_update(uint16_t color_tmp, uint8_t color_bright)
 
 static void led_scen_police(void)
 {
+    static uint16_t tmp = 0;
     led_bright_t led_val;
     led_val.r = 0;
     led_val.g = 0;
@@ -144,32 +145,113 @@ static void led_scen_police(void)
     led_val.c = 0;
     led_val.w = 0;
 
-
-    for (uint8_t i=0; i<6; i++) {
-        led_val.r = 255;
-        led_val.b = 0;        
+    if (tmp < 12) {
+        if (tmp%2)
+            led_val.r = 255;
         led_output_value(&led_val);
         osDelay(50);
-        led_val.r = 0;
-        led_val.b = 0;    
+    } else if (tmp > 12 && tmp <24) {
+        if (tmp%2) 
+            led_val.b = 255;
         led_output_value(&led_val);
         osDelay(50);
+    } else if (tmp == 12) {
+        led_output_value(&led_val);
+        osDelay(200);
+    } else if (tmp == 24) {
+        led_output_value(&led_val);
+        osDelay(200);
+        tmp = 0;
     }
 
-    osDelay(200);
-
-    for (uint8_t i=0; i<6; i++) {
-        led_val.r = 0;
-        led_val.b = 255;
-        led_output_value(&led_val);
-        osDelay(50);
-        led_val.r = 0;
-        led_val.b = 0;    
-        led_output_value(&led_val);
-        osDelay(50);
-    }
-    osDelay(200);
+    if (tmp < 24)
+        tmp++;
 }
+
+static void led_scen_ambulience(void)
+{
+    static uint16_t tmp = 0;
+    static uint8_t red = 0;
+    static uint8_t blue = 0;
+    led_bright_t led_val;
+    led_val.r = 0;
+    led_val.g = 0;
+    led_val.b = 0;
+    led_val.c = 0;
+    led_val.w = 0;
+
+    if (tmp < 256) {
+        if (tmp == 0)
+            red = 0;
+        else
+            red++;
+    } else if (tmp >= 256 && tmp < 512) {
+        red--;
+        if (tmp == 511)
+            red = 0;
+    } else if (tmp >= 512 && tmp < 768) {
+        if (tmp == 512)
+            blue = 0;
+        else 
+            blue++;
+    } else if (tmp >= 768 && tmp < 1024) {
+        blue--;
+        if (tmp == 1023)
+            blue = 0;
+    }
+    tmp++;
+    if (tmp > 1023)
+        tmp = 0;
+    led_val.r = red;
+    led_val.b = blue;
+    led_output_value(&led_val);
+    osDelay(1);
+
+}
+
+static void led_scen_lightning(void)
+{
+    static uint16_t tmp = 0;
+    // static uint8_t light_type = 0;
+    static int cold_color = 0;
+    led_bright_t led_val;
+    led_val.r = 0;
+    led_val.g = 0;
+    led_val.b = 0;
+    led_val.c = 0;
+    led_val.w = 0;
+
+    if (tmp < 10) {
+        if (tmp == 0)
+            cold_color = 0;
+        else 
+            cold_color += 25;            
+    } else if (tmp == 10) {
+        osDelay(50);
+    } else if (tmp < 16 && tmp > 10) {
+        cold_color -= 50;
+        if (tmp == 15)
+            cold_color = 0;
+    } else if (tmp < 21) {
+        cold_color += 50;
+    } else if (tmp == 21) {
+        osDelay(100);
+    } else if (tmp > 21 && tmp <= 31) {
+         cold_color -= 25;
+         if (tmp == 31)
+            cold_color = 0;
+    } else if (tmp >= 32 && tmp<= 42) {
+        osDelay(100);
+    }
+    tmp++;
+    if (tmp >= 42) 
+        tmp = 0;
+    led_val.c = (uint8_t)cold_color;
+    led_output_value(&led_val);
+    osDelay(10);
+}
+
+void 
 
 void led_scen(enum SCENES_SELECT SCENES)
 {
@@ -183,11 +265,13 @@ void led_scen(enum SCENES_SELECT SCENES)
         break;
 
     case AMBULIENCE:
-    
+        led_output_start();
+        led_scen_ambulience();
         break;
     
     case LIGHTNING:
-
+        led_output_start();
+        led_scen_lightning();
         break;
 
     case FIRE:
