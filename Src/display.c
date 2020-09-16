@@ -146,7 +146,7 @@ static void disp_bettery_big(enum BATTERY_STATUS pct)
     uint8_t tmp_row = 0;
     uint8_t tmp_col = 0;
     
-    disp_set_pos(2, 0);
+    disp_set_pos(3, 24);
     for (; tmp_col<4; tmp_col++) {
         for (tmp_row=0 ;tmp_row<64; tmp_row++)
             ssd1306_write_byte(battery_chrg_big[pct][tmp_col*64+tmp_row]);
