@@ -251,7 +251,7 @@ static void led_scen_lightning(void)
     osDelay(10);
 }
 
-void led_scen_fire(void)
+static void led_scen_fire(void)
 {
     static uint16_t tmp = 0;
     static led_bright_t led;
@@ -308,6 +308,26 @@ void led_scen_fire(void)
         osDelay(100);
 }
 
+static void led_scen_colorchase(void)
+{
+    static led_bright_t led;
+    static hsv_t hsv;
+    static int hue = 0;
+    
+    hue += 1;
+
+    if (hue >= 360)
+        hue = 0;
+
+    hsv.h = hue;
+    hsv.s = 100;
+    hsv.v = 100;
+
+    hsv2rgb(&hsv, &led);
+    led_output_value(&led);
+    osDelay(50);
+}
+
 void led_scen(enum SCENES_SELECT SCENES)
 {
     switch (SCENES) {
@@ -335,7 +355,8 @@ void led_scen(enum SCENES_SELECT SCENES)
         break;
     
     case COLORCHASE:
-
+        led_output_start();
+        led_scen_colorchase();
         break;
 
     default:
