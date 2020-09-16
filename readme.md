@@ -8,15 +8,15 @@ Hardware picture  👇
 
 No picture for now ;)
 
-- [ ] LED
+- [x] LED
   - [x] RGB
   - [x] C&W
-  - [ ] SECEN
+  - [x] SECEN
 - [x] DISPLAY
   - [x] RGB MODE
   - [x] C&W MODE
   - [x] SECEN MODE
-  - [ ] CHARGING WHEN IT'S POWER OFF
+  - [x] CHARGING WHEN IT'S POWER OFF
 - [ ] IR
   - [x] RGB
   - [x] C&W
@@ -27,3 +27,7 @@ No picture for now ;)
   - [ ] BATTERY TEST
   - [ ] PRESSURE TEST
   - [ ] POWER SOURCE TEST
+- [ ] HW
+  - [ ] MCU POWER UP ONLY WHEN BATTERY RELOAD
+  - [ ] HW & SW LOW POWER MODE
+
