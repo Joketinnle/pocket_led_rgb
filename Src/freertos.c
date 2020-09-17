@@ -211,7 +211,7 @@ void secn_task(void const * argument)
 {
   /* USER CODE BEGIN secn_task */
   osEvent msg;
-  enum SCENES_SELECT SCENES;
+  enum SCENES_SELECT SCENES = NONE;
   bool scenes_off = false;
   /* Infinite loop */
   for(;;)

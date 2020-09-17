@@ -27,7 +27,11 @@ No picture for now ;)
   - [ ] BATTERY TEST
   - [ ] PRESSURE TEST
   - [ ] POWER SOURCE TEST
+- [ ] FW LOW POWER MODE
+  - [ ] STOP MODE  
+  - [ ] 
 - [ ] HW
   - [ ] MCU POWER UP ONLY WHEN BATTERY RELOAD
   - [ ] HW & SW LOW POWER MODE
+  - [ ] CURRENT TEST 
 
