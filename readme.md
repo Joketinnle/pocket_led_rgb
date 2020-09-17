@@ -29,7 +29,7 @@ No picture for now ;)
   - [ ] POWER SOURCE TEST
 - [ ] FW LOW POWER MODE
   - [ ] STOP MODE  
-  - [ ] 
+  - [ ] WAKEUP WHEN POWER_ON_EVENT OR  IN CHARGING
 - [ ] HW
   - [ ] MCU POWER UP ONLY WHEN BATTERY RELOAD
   - [ ] HW & SW LOW POWER MODE
