@@ -485,6 +485,7 @@ void disp_update(struct page_info *page)
             disp_bettery_big(page->BAT);
         else 
             disp_clear();
+        // sys_stop_mode_enable();
     } else {
         if (page->charging == true) {
             disp_bettery_charging(page->BAT);

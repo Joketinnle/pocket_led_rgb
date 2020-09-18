@@ -191,6 +191,8 @@ void StartDefaultTask(void const * argument)
 
   /* USER CODE BEGIN StartDefaultTask */
   sys_show_info();
+  osDelay(1000);
+  sys_stop_mode_enable();
   /* Infinite loop */
   for(;;)
   {

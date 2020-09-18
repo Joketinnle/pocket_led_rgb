@@ -104,8 +104,7 @@ struct ir_data{
 
 void ir_recv_init(void);
 void ir_recv_deinit(void);
-
 void ir_timer_callback_func(void);
-
+void ir_read_data(void);
 void ir_cmd_process(uint8_t ir_cmd, struct page_info *page);
 #endif

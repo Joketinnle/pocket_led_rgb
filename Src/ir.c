@@ -109,7 +109,7 @@ static ErrorStatus ir_data_check(struct ir_data *data)
 }
 
 
-static void ir_read_data(void)
+void ir_read_data(void)
 {
 
 
@@ -214,12 +214,7 @@ static void ir_read_data(void)
 
 }
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-    if (IR_Pin == GPIO_Pin) {
-        ir_read_data();
-    }
-}
+
 
 void ir_timer_callback_func(void)
 {

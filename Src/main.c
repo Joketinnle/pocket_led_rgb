@@ -68,7 +68,7 @@
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
+
 void MX_FREERTOS_Init(void);
 
 /* USER CODE BEGIN PFP */
@@ -94,7 +94,6 @@ int main(void)
   /* MCU Configuration----------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-
   HAL_Init();
 
   /* USER CODE BEGIN Init */
@@ -201,6 +200,16 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    if (IR_Pin == GPIO_Pin) {
+        ir_read_data();
+    }
+
+    if (POWER_Pin == GPIO_Pin) {
+        sys_stop_mode_disable();
+    }
+}
 
 /* USER CODE END 4 */
 

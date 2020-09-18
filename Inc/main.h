@@ -64,6 +64,7 @@
 #define IR_EXTI_IRQn EXTI15_10_IRQn
 #define POWER_Pin GPIO_PIN_0
 #define POWER_GPIO_Port GPIOA
+#define POWER_EXTI_IRQn EXTI0_IRQn
 #define PLUS_Pin GPIO_PIN_1
 #define PLUS_GPIO_Port GPIOA
 #define MINUS_Pin GPIO_PIN_2
@@ -103,7 +104,7 @@
 /* #define USE_FULL_ASSERT    1U */
 
 /* USER CODE BEGIN Private defines */
-
+void SystemClock_Config(void);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

@@ -6,9 +6,8 @@
 #define VERSION_NUM                         0
 
 void sys_show_info(void);
-
-
-
+void sys_stop_mode_enable(void);
+void sys_stop_mode_disable(void);
 
 
 #endif
