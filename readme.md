@@ -20,18 +20,13 @@ No picture for now ;)
 - [ ] IR
   - [x] RGB
   - [x] C&W
-  - [ ] SECEN
+  - [ ] SECEN (SPECIAL EFFECTS)
 - [ ] TEMPERATURE CHECK
   - [ ] AUTO POWER OFF
 - [ ] TEST
   - [ ] BATTERY TEST
   - [ ] PRESSURE TEST
   - [ ] POWER SOURCE TEST
-- [ ] FW LOW POWER MODE
-  - [ ] STOP MODE  
-  - [ ] WAKEUP WHEN POWER_ON_EVENT OR  IN CHARGING
-- [ ] HW
-  - [ ] MCU POWER UP ONLY WHEN BATTERY RELOAD
-  - [ ] HW & SW LOW POWER MODE
-  - [ ] CURRENT TEST 
-
+- [x] FW LOW POWER MODE (1.3mA)
+  - [x] STOP MODE  
+  - [x] WAKEUP WHEN POWER_ON_EVENT OR  IN CHARGING
