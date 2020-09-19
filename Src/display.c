@@ -472,6 +472,7 @@ void disp_update(struct page_info *page)
     case PAGE_OFF:
         if (page_prev.PAGE != page->PAGE) {
             disp_clear();
+            sys_reset();
         }
         break;
     
@@ -481,11 +482,11 @@ void disp_update(struct page_info *page)
     /* show battery val */
     if (PAGE_OFF == page->PAGE) {
         led_output_stop();
-        if (page->charging == true) 
+        if (page->charging == true) {
             disp_bettery_big(page->BAT);
-        else 
+        } else {
             disp_clear();
-        // sys_stop_mode_enable();
+        }
     } else {
         if (page->charging == true) {
             disp_bettery_charging(page->BAT);

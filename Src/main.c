@@ -68,7 +68,7 @@
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-
+void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 
 /* USER CODE BEGIN PFP */
@@ -116,7 +116,8 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  printf("start\r\n");
+  sys_stop_mode_enable();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

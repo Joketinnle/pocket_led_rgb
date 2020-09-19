@@ -84,6 +84,7 @@ osMailQId batteryMailHandle;
 osThreadId defaultTaskHandle;
 osThreadId secnTaskHandle;
 osThreadId dispTaskHandle;
+osThreadId batteryTaskHandle;
 osMessageQId irQueueHandle;
 osMessageQId keyQueueHandle;
 osTimerId keyTimerHandle;
@@ -97,6 +98,7 @@ osTimerId irTimerHandle;
 void StartDefaultTask(void const * argument);
 void secn_task(void const * argument);
 void dispaly_task(void const * argument);
+void battery_task(void const * argument);
 void key_timer_callback(void const * argument);
 void ir_timer_callback(void const * argument);
 
@@ -135,16 +137,20 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 64);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityIdle, 0, 64);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of secnTask */
-  osThreadDef(secnTask, secn_task, osPriorityIdle, 0, 128);
+  osThreadDef(secnTask, secn_task, osPriorityLow, 0, 128);
   secnTaskHandle = osThreadCreate(osThread(secnTask), NULL);
 
   /* definition and creation of dispTask */
   osThreadDef(dispTask, dispaly_task, osPriorityHigh, 0, 256);
   dispTaskHandle = osThreadCreate(osThread(dispTask), NULL);
+
+  /* definition and creation of batteryTask */
+  osThreadDef(batteryTask, battery_task, osPriorityLow, 0, 64);
+  batteryTaskHandle = osThreadCreate(osThread(batteryTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -191,12 +197,10 @@ void StartDefaultTask(void const * argument)
 
   /* USER CODE BEGIN StartDefaultTask */
   sys_show_info();
-  osDelay(1000);
-  sys_stop_mode_enable();
+
   /* Infinite loop */
   for(;;)
   {
-      bettery_status_check();
       osDelay(1000);
   }
   /* USER CODE END StartDefaultTask */
@@ -298,6 +302,25 @@ void dispaly_task(void const * argument)
     osDelay(1);
   }
   /* USER CODE END dispaly_task */
+}
+
+/* USER CODE BEGIN Header_battery_task */
+/**
+* @brief Function implementing the batteryTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_battery_task */
+void battery_task(void const * argument)
+{
+  /* USER CODE BEGIN battery_task */
+  /* Infinite loop */
+  for(;;)
+  {
+      bettery_status_check();
+      osDelay(1000);
+  }
+  /* USER CODE END battery_task */
 }
 
 /* key_timer_callback function */
