@@ -17,7 +17,9 @@ static enum NEC_CODE_STATUE IR_STA = HEADER;
 static struct ir_data ir_dat;
 
 static uint8_t g_ir_raw_data_cnt = 0;
+#if defined(__IR__DEBUG__)  
 static bool g_ir_read_start = true;
+#endif
 static uint32_t g_ir_recv_cnt = 0;
 static uint32_t g_ir_raw_data[64];
 static uint8_t ir_button_array[21] = {
@@ -218,7 +220,9 @@ void ir_read_data(void)
 
 void ir_timer_callback_func(void)
 {
+#if defined(__IR__DEBUG__)
     g_ir_read_start = true;
+#endif	
     g_ir_recv_cnt = 0;
     IR_STA = HEADER;
     ir_data_init(&ir_dat);

@@ -3,7 +3,7 @@
 
 #define VERSION_MAJOR                       0
 #define VERSION_MINOR                       2
-#define VERSION_NUM                         1
+#define VERSION_NUM                         2
 
 void sys_show_info(void);
 void sys_stop_mode_enable(void);
