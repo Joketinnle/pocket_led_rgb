@@ -472,6 +472,7 @@ void disp_update(struct page_info *page)
     case PAGE_OFF:
         if (page_prev.PAGE != page->PAGE && page->charging == false) {
             disp_clear();
+            osDelay(10);
             sys_reset();
         }
         break;

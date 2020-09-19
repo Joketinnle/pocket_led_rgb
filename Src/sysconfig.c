@@ -57,6 +57,8 @@ void sys_stop_mode_disable(void)
     sys_stop_mode_flag = false;
     HAL_ResumeTick();
     HAL_NVIC_DisableIRQ(POWER_EXTI_IRQn);
+    HAL_NVIC_DisableIRQ(POWER_EXTI_IRQn);
+
     SystemClock_Config();
 }
 

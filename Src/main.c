@@ -207,7 +207,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         ir_read_data();
     }
 
-    if (POWER_Pin == GPIO_Pin || STAT_1_Pin == GPIO_Pin || STAT_2_Pin == GPIO_Pin) {
+    if ((POWER_Pin == GPIO_Pin || STAT_1_Pin == GPIO_Pin || STAT_2_Pin == GPIO_Pin) 
+      && true == is_sys_in_stop_mode()) {
         sys_stop_mode_disable();
     }
 }
