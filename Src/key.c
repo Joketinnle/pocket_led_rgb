@@ -110,7 +110,7 @@ uint8_t key_process(struct page_info *page, uint32_t key_sta)
     static struct page_info last_page;
     static bool first_time_init = true;
     uint8_t key_act;
-    uint8_t i;//KEY_NUM_MAX
+    uint32_t i;//KEY_NUM_MAX
     uint8_t ret = KEY_NONE_ACTION;
     
     for (i=0; i<KEY_NUM_MAX; i++) {

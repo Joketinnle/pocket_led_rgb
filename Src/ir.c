@@ -22,15 +22,15 @@ static bool g_ir_read_start = true;
 #endif
 static uint32_t g_ir_recv_cnt = 0;
 static uint32_t g_ir_raw_data[64];
-static uint8_t ir_button_array[21] = {
-    IR_CH_MINUS,    IR_CH_ENTER,    IR_CH_PLUS, 
-    IR_PREV,        IR_NEXT,        IR_ONOFF,
-    IR_VOL_MINUS,   IR_VOL_PLUS,    IR_EQ,
-    IR_ZERO,        IR_100_PLUS,    IR_200_PLUS,
-    IR_ONE,         IR_TWO,         IR_THREE,
-    IR_FOUR,        IR_FIVE,        IR_SIX,
-    IR_SEVEN,       IR_EIGHT,       IR_NINE
-};
+// static uint8_t ir_button_array[21] = {
+//     IR_CH_MINUS,    IR_CH_ENTER,    IR_CH_PLUS, 
+//     IR_PREV,        IR_NEXT,        IR_ONOFF,
+//     IR_VOL_MINUS,   IR_VOL_PLUS,    IR_EQ,
+//     IR_ZERO,        IR_100_PLUS,    IR_200_PLUS,
+//     IR_ONE,         IR_TWO,         IR_THREE,
+//     IR_FOUR,        IR_FIVE,        IR_SIX,
+//     IR_SEVEN,       IR_EIGHT,       IR_NINE
+// };
 
 static void ir_data_init(struct ir_data *data)
 {
