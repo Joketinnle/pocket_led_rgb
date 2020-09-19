@@ -203,11 +203,11 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-    if (IR_Pin == GPIO_Pin) {
+    if (IR_Pin == GPIO_Pin && false == is_sys_in_stop_mode()) {
         ir_read_data();
     }
 
-    if (POWER_Pin == GPIO_Pin) {
+    if (POWER_Pin == GPIO_Pin || STAT_1_Pin == GPIO_Pin || STAT_2_Pin == GPIO_Pin) {
         sys_stop_mode_disable();
     }
 }

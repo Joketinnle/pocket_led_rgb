@@ -470,7 +470,7 @@ void disp_update(struct page_info *page)
         break;
 
     case PAGE_OFF:
-        if (page_prev.PAGE != page->PAGE) {
+        if (page_prev.PAGE != page->PAGE && page->charging == false) {
             disp_clear();
             sys_reset();
         }
@@ -484,8 +484,14 @@ void disp_update(struct page_info *page)
         led_output_stop();
         if (page->charging == true) {
             disp_bettery_big(page->BAT);
+            page_prev.charging = true;
         } else {
-            disp_clear();
+            if (page_prev.charging == true) {
+                page_prev.charging = false;
+                disp_clear();
+                sys_reset();
+            }
+            
         }
     } else {
         if (page->charging == true) {
