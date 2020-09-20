@@ -6,7 +6,7 @@
 #define BATTERY_40                  340
 #define BATTERY_60                  360
 #define BATTERY_80                  380
-#define BATTERY_100                 390
+#define BATTERY_100                 410
 /**
  * this file is for read battery val and tmp adc val
  * charging and charging complete.

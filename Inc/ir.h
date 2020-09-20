@@ -31,6 +31,8 @@
  * 200+:
  * 0~9 : Scene 0~9
  * 
+ * Be aware after pressing this button ⏯, leds can be light-on.
+ * 
  * Wanna know more about NEC Coding vist this website 👇
  *                                          https://irext.net/doc/
  * The owner of this website is @strawmanbobi he is a great coder.

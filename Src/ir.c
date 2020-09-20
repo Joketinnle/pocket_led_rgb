@@ -110,6 +110,17 @@ static ErrorStatus ir_data_check(struct ir_data *data)
     return SUCCESS;
 }
 
+void ir_recv_enable(void)
+{
+    GPIO_InitTypeDef GPIO_InitStruct;
+
+    __HAL_RCC_GPIOC_IS_CLK_ENABLED();
+    GPIO_InitStruct.Pin = IR_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(IR_GPIO_Port, &GPIO_InitStruct);   
+}
+
 
 void ir_read_data(void)
 {
@@ -230,6 +241,12 @@ void ir_timer_callback_func(void)
     osTimerStop(irTimerHandle);
 }
 
+/**
+ * ir_recv_init()
+ * this func is called by key.c
+ * when power key get a long press(power on)
+ * turn on ir recv
+*/
 void ir_recv_init(void)
 {
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);

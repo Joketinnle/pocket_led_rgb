@@ -16,6 +16,7 @@ void sys_show_info(void)
 }
 
 
+
 void sys_stop_mode_enable(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct;
@@ -35,11 +36,6 @@ void sys_stop_mode_enable(void)
     HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 
 
-
-
-    /* second */
-    /* enter stop mode */
-
 }
 
 void sys_stop_mode_disable(void)
@@ -52,7 +48,7 @@ void sys_stop_mode_disable(void)
     HAL_GPIO_Init(STAT_1_GPIO_Port, &GPIO_InitStruct); 
 
     /* enable GPIO_C for ir*/
-    __HAL_RCC_GPIOC_IS_CLK_ENABLED();
+
 
     sys_stop_mode_flag = false;
     HAL_ResumeTick();

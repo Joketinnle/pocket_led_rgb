@@ -116,7 +116,6 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  printf("start\r\n");
   sys_stop_mode_enable();
   /* USER CODE END 2 */
 
@@ -203,7 +202,7 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-    if (IR_Pin == GPIO_Pin && false == is_sys_in_stop_mode()) {
+    if (IR_Pin == GPIO_Pin && false == is_sys_in_stop_mode() ) {
         ir_read_data();
     }
 
