@@ -110,18 +110,6 @@ static ErrorStatus ir_data_check(struct ir_data *data)
     return SUCCESS;
 }
 
-void ir_recv_enable(void)
-{
-    GPIO_InitTypeDef GPIO_InitStruct;
-
-    __HAL_RCC_GPIOC_IS_CLK_ENABLED();
-    GPIO_InitStruct.Pin = IR_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(IR_GPIO_Port, &GPIO_InitStruct);   
-}
-
-
 void ir_read_data(void)
 {
 
@@ -249,6 +237,13 @@ void ir_timer_callback_func(void)
 */
 void ir_recv_init(void)
 {
+    GPIO_InitTypeDef GPIO_InitStruct;
+
+    __HAL_RCC_GPIOC_IS_CLK_ENABLED();
+    GPIO_InitStruct.Pin = IR_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(IR_GPIO_Port, &GPIO_InitStruct);   
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 
@@ -326,6 +321,10 @@ void ir_cmd_process(uint8_t ir_cmd, struct page_info *page)
         } else if (page->LED_SWITCH == OFF) {
             page->LED_SWITCH = ON;
         }
+        if (page->PAGE == PAGE_SCENES) {
+            page->PAGE = PAGE_SCENES;
+            page->SECN = NONE;
+        }
         break;
 
     case IR_VOL_MINUS:
@@ -361,11 +360,12 @@ void ir_cmd_process(uint8_t ir_cmd, struct page_info *page)
         break;
     
     case IR_EQ:
-
+        
         break;
 
     case IR_ZERO:
-
+        page->PAGE = PAGE_SCENES;
+        page->SECN = NONE;
         break;
 
     case IR_100_PLUS:
@@ -377,23 +377,28 @@ void ir_cmd_process(uint8_t ir_cmd, struct page_info *page)
         break;
 
     case IR_ONE:
-
+        page->PAGE = PAGE_SCENES;
+        page->SECN = POLICE;
         break;
 
     case IR_TWO:
-
+        page->PAGE = PAGE_SCENES;
+        page->SECN = AMBULIENCE;
         break;
 
     case IR_THREE:
-
+        page->PAGE = PAGE_SCENES;
+        page->SECN = LIGHTNING;
         break;
 
     case IR_FOUR:
-
+        page->PAGE = PAGE_SCENES;
+        page->SECN = FIRE;
         break;
 
     case IR_FIVE:
-
+        page->PAGE = PAGE_SCENES;
+        page->SECN = COLORCHASE;
         break;
 
     case IR_SIX:

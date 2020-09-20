@@ -17,10 +17,10 @@ No picture for now ;)
   - [x] C&W MODE
   - [x] SECEN MODE
   - [x] CHARGING WHEN IT'S POWER OFF
-- [ ] IR
+- [x] IR
   - [x] RGB
   - [x] C&W
-  - [ ] SECEN (SPECIAL EFFECTS)
+  - [x] SECEN (SPECIAL EFFICIENCY)
 - [ ] TEMPERATURE CHECK
   - [ ] AUTO POWER OFF
 - [ ] TEST

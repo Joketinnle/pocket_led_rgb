@@ -203,7 +203,7 @@ void StartDefaultTask(void const * argument)
 
   /* USER CODE BEGIN StartDefaultTask */
   sys_show_info();
-  osTimerStart(goSleepTimerHandle, 5000);
+  osTimerStart(goSleepTimerHandle, 10000);
   /* Infinite loop */
   for(;;)
   {

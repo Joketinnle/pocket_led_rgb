@@ -401,7 +401,6 @@ void disp_update(struct page_info *page)
             disp_6x8_printf("  Sat");
             disp_set_pos(6, 80);
             disp_6x8_printf("  Val");
-            // disp_bettery(page->BAT);
             disp_select_rgb_cw(page->select_num);
             if (page->LED_SWITCH == ON)
                 led_rgb_update(page->hue, page->sat, page->val);
@@ -428,7 +427,6 @@ void disp_update(struct page_info *page)
         if (page_prev.PAGE != page->PAGE) {
             disp_clear();
             disp_mode(CW_MODE);
-            // disp_bettery(page->BAT);
             disp_set_pos(3, 8);
             disp_8x16_printf("%4dK", page->color_temp);
             disp_set_pos(3, 72);
@@ -461,7 +459,6 @@ void disp_update(struct page_info *page)
         if (page_prev.PAGE != page->PAGE) { 
             disp_clear();
             disp_mode(SCENES_MODE);
-            // disp_bettery(page->BAT);
             disp_scenes_select(page->SECN);
         }
         if (page_prev.SECN != page->SECN) {

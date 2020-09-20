@@ -47,7 +47,7 @@ void sys_stop_mode_disable(void)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(STAT_1_GPIO_Port, &GPIO_InitStruct); 
 
-    /* enable GPIO_C for ir*/
+    ir_recv_init();
 
 
     sys_stop_mode_flag = false;
