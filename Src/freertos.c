@@ -89,6 +89,7 @@ osMessageQId irQueueHandle;
 osMessageQId keyQueueHandle;
 osTimerId keyTimerHandle;
 osTimerId irTimerHandle;
+osTimerId goSleepTimerHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -101,6 +102,7 @@ void dispaly_task(void const * argument);
 void battery_task(void const * argument);
 void key_timer_callback(void const * argument);
 void ir_timer_callback(void const * argument);
+void go_sleep_callback(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -130,6 +132,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of irTimer */
   osTimerDef(irTimer, ir_timer_callback);
   irTimerHandle = osTimerCreate(osTimer(irTimer), osTimerPeriodic, NULL);
+
+  /* definition and creation of goSleepTimer */
+  osTimerDef(goSleepTimer, go_sleep_callback);
+  goSleepTimerHandle = osTimerCreate(osTimer(goSleepTimer), osTimerOnce, NULL);
 
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
@@ -197,7 +203,7 @@ void StartDefaultTask(void const * argument)
 
   /* USER CODE BEGIN StartDefaultTask */
   sys_show_info();
-
+  osTimerStart(goSleepTimerHandle, 5000);
   /* Infinite loop */
   for(;;)
   {
@@ -297,7 +303,6 @@ void dispaly_task(void const * argument)
         disp_update(&pg_info);
     }
 
-    
 
     osDelay(1);
   }
@@ -337,6 +342,14 @@ void ir_timer_callback(void const * argument)
   /* USER CODE BEGIN ir_timer_callback */
   ir_timer_callback_func();
   /* USER CODE END ir_timer_callback */
+}
+
+/* go_sleep_callback function */
+void go_sleep_callback(void const * argument)
+{
+  /* USER CODE BEGIN go_sleep_callback */
+  sys_reset();
+  /* USER CODE END go_sleep_callback */
 }
 
 /* Private application code --------------------------------------------------*/

@@ -29,5 +29,5 @@ extern osMessageQId secnQueueHandle;
 extern osMailQId batteryMailHandle;
 
 extern osTimerId irTimerHandle;
-
+extern osTimerId goSleepTimerHandle;
 #endif

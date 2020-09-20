@@ -138,6 +138,7 @@ uint8_t key_process(struct page_info *page, uint32_t key_sta)
                     page->brightness = 0;
                     page->SECN = NONE;
                     ir_recv_init();
+                    osTimerStop(goSleepTimerHandle);
                     first_time_init = false;
                 } else if (page->PAGE == PAGE_OFF && false == first_time_init) {
                     ir_recv_init();

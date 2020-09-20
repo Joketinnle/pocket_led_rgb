@@ -485,6 +485,7 @@ void disp_update(struct page_info *page)
     if (PAGE_OFF == page->PAGE) {
         led_output_stop();
         if (page->charging == true) {
+            osTimerStop(goSleepTimerHandle);
             disp_bettery_big(page->BAT);
             page_prev.charging = true;
         } else {
