@@ -20,7 +20,9 @@ Build by MDK5
 
 <img src="./docs/remote.png" style="zoom:50%;" align="left"/>
 
-**Fig.3 IR Remote **
+ **Fig.3 IR Remote **
+
+
 
 ## INSTRUCTIONS
 
