@@ -18,9 +18,9 @@ Build by MDK5
 
 
 
-<img src="./docs/remote.png" style="zoom:50%;" align="left"/>
+<img src="./docs/remote.png" style="zoom:50%;"/>
 
- **Fig.3 IR Remote **
+ 																													**Fig.3 IR Remote **
 
 
 
@@ -50,9 +50,9 @@ Build by MDK5
   - 5:  COLORCHASE
   - ...
 
+
+
 ## To-Do List
-
-
 
 - [x] LED
   - [x] RGB
