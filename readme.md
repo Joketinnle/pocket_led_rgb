@@ -1,6 +1,6 @@
-# Pocket Leds
+# Pocket RGB Led Light
 
-Porject create by STM32CubeMX 4.27.0 (Really don't like version 5.x that UI looks horrible. Old hobit die hard!)
+Project create by STM32CubeMX 4.27.0 (Really don't like version 5.x that UI looks horrible. Old habit die hard!)
 
 Build by MDK5
 
