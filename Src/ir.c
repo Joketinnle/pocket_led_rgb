@@ -1,7 +1,6 @@
 #include "includes.h"
 #include "ir.h"
 
-
 #define DEBUG_IR                       0
 
 #if DEBUG_IR
@@ -9,7 +8,6 @@
 #else
 #define deubg_ir(...)
 #endif
-
 
 extern TIM_HandleTypeDef htim2;
 
@@ -207,15 +205,9 @@ void ir_read_data(void)
         IR_STA = HEADER;
         break;
     }
-
-    
-
-
 #endif
 
 }
-
-
 
 void ir_timer_callback_func(void)
 {
