@@ -6,13 +6,13 @@ Build by MDK5
 
 ## Hardware picture
 
-<img src="./docs/pcb_bottom_side.png" style="zoom:50%;" align="left" />
+<img src="./docs/pcb_bottom_side.png" style="zoom:50%;"/>
 
 **Fig.1 The Button Side of PCB**
 
 
 
-<img src="./docs/pcb_top_side.png" style="zoom:50%;" align="left" />
+<img src="./docs/pcb_top_side.png" style="zoom:50%;"/>
 
 **Fig.2 The Top Side of PCB**
 
@@ -20,7 +20,7 @@ Build by MDK5
 
 <img src="./docs/remote.png" style="zoom:50%;"/>
 
- 																													**Fig.3 IR Remote **
+**Fig.3 IR Remote **
 
 
 
