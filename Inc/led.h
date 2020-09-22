@@ -18,6 +18,6 @@ void led_init(void);
 void led_output_stop(void);
 void led_rgb_update(uint16_t hue, uint8_t sat, uint8_t val);
 void led_cw_update(uint16_t color_tmp, uint8_t color_bright);
-
+bool led_output_onoff(void);
 void led_scen(enum SCENES_SELECT SCENES);
 #endif

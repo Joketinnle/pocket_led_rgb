@@ -15,8 +15,6 @@ void sys_show_info(void)
     printf("version %d.%d.%d\r\n", VERSION_MAJOR, VERSION_MINOR, VERSION_NUM);
 }
 
-
-
 void sys_stop_mode_enable(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct;
@@ -68,5 +66,4 @@ void sys_reset(void)
     __disable_irq();
     NVIC_SystemReset();
 }
-
 

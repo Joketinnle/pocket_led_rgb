@@ -202,11 +202,24 @@ void StartDefaultTask(void const * argument)
 {
 
   /* USER CODE BEGIN StartDefaultTask */
+  uint32_t auto_shutdown = 1800; /* 30min */
+  bool led_onoff = false;
+  bool bat_charge = false;
   sys_show_info();
   osTimerStart(goSleepTimerHandle, 10000);
   /* Infinite loop */
   for(;;)
   {
+      led_onoff = led_output_onoff();
+      bat_charge = battery_charging() | battery_charging_complete();
+      if (false == led_onoff && false == bat_charge) {
+          if (auto_shutdown-- == 0) {
+              sys_reset();
+              printf("auto shutdown\r\n");
+          }
+      } else {
+          auto_shutdown = 1800;
+      }
       osDelay(1000);
   }
   /* USER CODE END StartDefaultTask */
@@ -271,12 +284,14 @@ void dispaly_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+    /* button press */
     msg = osMessageGet(keyQueueHandle, 0);
     if (msg.status == osEventMessage) {
         key_p_m_long_sta = key_process(&pg_info, msg.value.v);
         disp_update(&pg_info);
     }
 
+    /* battery info */
     msg = osMailGet(batteryMailHandle, 0);
     if (msg.status == osEventMail) {
         bat_stat = msg.value.p;
@@ -302,7 +317,6 @@ void dispaly_task(void const * argument)
         }
         disp_update(&pg_info);
     }
-
 
     osDelay(1);
   }

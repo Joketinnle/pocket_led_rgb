@@ -85,7 +85,7 @@ static enum BATTERY_STATUS battery_adc_to_pct(float bat_volt)
  *                  STA2: HIGH
  *                  STA1: HIGH
 */
-static bool battery_charging(void)
+bool battery_charging(void)
 {
     if (HAL_GPIO_ReadPin(STAT_2_GPIO_Port, STAT_2_Pin) == GPIO_PIN_SET 
         && HAL_GPIO_ReadPin(STAT_1_GPIO_Port, STAT_1_Pin) == GPIO_PIN_RESET)
@@ -94,7 +94,7 @@ static bool battery_charging(void)
         return false;
 }
 
-static bool battery_charging_complete(void)
+bool battery_charging_complete(void)
 {
     if (HAL_GPIO_ReadPin(STAT_2_GPIO_Port, STAT_2_Pin) == GPIO_PIN_RESET 
         && HAL_GPIO_ReadPin(STAT_1_GPIO_Port, STAT_1_Pin) == GPIO_PIN_SET)

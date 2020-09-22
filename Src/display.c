@@ -491,7 +491,6 @@ void disp_update(struct page_info *page)
                 disp_clear();
                 sys_reset();
             }
-            
         }
     } else {
         if (page->charging == true) {

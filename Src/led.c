@@ -57,6 +57,21 @@ void led_output_value(led_bright_t *led)
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, led->r);
 }
 
+bool led_output_onoff(void)
+{
+    led_bright_t led;
+    led.w = __HAL_TIM_GET_COMPARE(&htim3, TIM_CHANNEL_1);
+    led.c = __HAL_TIM_GET_COMPARE(&htim3, TIM_CHANNEL_2);
+    led.b = __HAL_TIM_GET_COMPARE(&htim4, TIM_CHANNEL_1);
+    led.g = __HAL_TIM_GET_COMPARE(&htim4, TIM_CHANNEL_2);
+    led.r = __HAL_TIM_GET_COMPARE(&htim4, TIM_CHANNEL_3);
+    
+    if (led.w || led.c || led.b || led.g || led.r)
+        return true;
+    else 
+        return false;
+}
+
 static void led_stop_rgb(void)
 {
     HAL_TIM_PWM_Stop(&htim4,TIM_CHANNEL_1);
