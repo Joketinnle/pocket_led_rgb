@@ -143,3 +143,4 @@ MDK-ARM/pocket_led/pocket_led.build_log.htm
 MDK-ARM/DebugConfig/pocket_led_STM32F103C8_1.0.0.dbgconf
 MDK-ARM/pocket_led.uvguix.Rainman
 MDK-ARM/startup_stm32f103xb.lst
+MDK-ARM/RTE/_pocket_led/RTE_Components.h
